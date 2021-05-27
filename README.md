@@ -2,6 +2,11 @@
 // These files for students analysis raw data
 //
 
+//
+// Example untar file 
+
+$ tar xvjf file.tbz
+
 // Example analysis raw data
 
 $ cd macros
