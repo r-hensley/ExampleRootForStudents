@@ -45,8 +45,16 @@ PWD = $(shell pwd)
 # One more variable, the /dataClasses folder
 DATA = $(PWD)/dataClasses
 
+# Data.mk is another makefile over in the DATA folder defined in the above line
+
+# It first defines a variable called $(DATALIBS) which is equal to: 
+#  DATALIBS := -lHist #-lCore #-lCint -lRIO -lTree -lNet -lThread -lMatrix -lMathCore -lGpad -lGraf -lSpectrum #-lTELoss
+
+# It then creates the variables DATA_HEADERS, DATACPP_SRCS, DATAOBJS, and DATACPP_DEPS which have files such as 
+#  RawEvent.h, linkdef.h, RawEvent.cpp, DataCint.cpp, etc
 -include $(DATA)/Data.mk
 
+# This "all" is the scope (or "target") of the make command. If only `make` is called, it will default to "all". In this case, it will go down to the `libData.so` section
 all: libData.so \
 
 # ROOT html documentation, it will be done as a program which will be alsa compiled by this makefile, program will be as a last condition after all of the libraries
@@ -71,10 +79,12 @@ $(DATA)/DataCint.cpp:
 libData.so: $(DATAOBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
+	# This compiles into libData.so all the default libraries in root + all the ones in DATALIBS like lHist + RawEvent.o + DataCint.o
 	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" $(DATAOBJS) $(DATALIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
+# If you type `make .PHONY`, it'll construct libData.so then immediately run clean and delete it.
 .PHONY: all clean
 
 # Each subdirectory must supply rules for building sources it contributes
