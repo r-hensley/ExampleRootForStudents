@@ -55,6 +55,9 @@ DATA = $(PWD)/dataClasses
 -include $(DATA)/Data.mk
 
 # This "all" is the scope (or "target") of the make command. If only `make` is called, it will default to "all". In this case, it will go down to the `libData.so` section
+# Things on the same line as the colon are dependencies, so the "all" target depends on libData.so
+# Things on lines after the colon are commands, so this target has no commands. (Notice, `clean` has no dependencies but a bunch of commands)
+# If you type just `make`, it will default to this because it's the first target in the makefile.
 all: libData.so \
 
 # ROOT html documentation, it will be done as a program which will be alsa compiled by this makefile, program will be as a last condition after all of the libraries
