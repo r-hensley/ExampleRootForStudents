@@ -2,31 +2,55 @@
 // take raw data and plot profile
 //
 
+// brackets look for header files in predetermined directory path, used for system header files
+// looks relative to current folder, used for user header files
 
-#include <TTree.h>
-#include <TGraph.h>
-#include <TFile.h>
-#include <TSystem.h>
-#include <TCanvas.h>
-#include <TProfile2D.h>
-#include <TStyle.h>
+// TTree is a list of columns/branches called TBranch
+#include <TTree.h> // https://root.cern.ch/doc/master/classTTree.html
+
+// TGraph is a graph class to make graphs by specifying all x and y points
+#include <TGraph.h> // https://root.cern.ch/doc/master/classTGraph.html
+
+// References a ROOT data file
+#include <TFile.h> // https://root.cern.ch/doc/master/classTFile.html
+
+// TSystem interacts with the OS. For us, this is the Load command
+#include <TSystem.h> // https://root.cern.ch/doc/master/classTSystem.html
+
+// Creates a window to put graphs in (we create three)
+#include <TCanvas.h> // https://root.cern.ch/doc/master/classTCanvas.html
+
+// 2D Histograms, displays mean value of Z + error for each cell in
+#include <TProfile2D.h> // https://root.cern.ch/doc/master/classTProfile2D.html
+
+// Define special styles, editing gStyle pointer edits default style
+#include <TStyle.h> // https://root.cern.ch/doc/master/classTStyle.html
+
+#include "RawEvent.h" 
 
 
-
+// void means this function does not have a return value
+// first argument is called "rootfile" of type char*
+// second argument is called "nevn" of type int
+// We write `testShowProf_rawevent("../data/1000evn_v3.root",100)`
 void testShowProf_rawevent(char* rootfile, int nevn)
 {
 
-  using std::count;
-  using std::endl;
-  gStyle ->SetCanvasDefH(900);
-  gStyle ->SetCanvasDefW(1500);
+  using std::count;  // lets you use count without having to type std::count everytime
+  using std::endl;  // lets you use std::endl without having to type std::endl everytime
+  gStyle ->SetCanvasDefH(900);  // Arrow sets the SetCanvasDefH variable of the gStyle pointer
+  gStyle ->SetCanvasDefW(1500);  // Sets default width/height of canvases
 
-  gSystem->Load("../libData.so");
+  gSystem->Load("../libData.so");  // from TSystem.h, loads things like RawEvent
 
-  TFile *fr = new TFile(rootfile);
-  //
-  TTree *tr = (TTree*)fr->Get("rtree");
+  TFile *fr = new TFile(rootfile);  // loads the data in the .root file
 
+  TTree *tr = (TTree*)fr->Get("rtree");  // creates a tree to store the data from data "fr"
+  // In this case, our file 1000evn_v3.root has two keys inside, both named rtree of type TTree (maybe for each batch?), one is called "Cycle 11", one is "Cycle 12"
+  // To view what is inside it, go to the data folder, open root, type `TFile f("1000evn_v3.root")` then `TBrowser browser`.
+  // More info here: https://root.cern/manual/storing_root_objects/
+
+  // RawEvent objects store events in a format close to the raw data that comes out of the detector  
   RawEvent *revent = new RawEvent();
 
   TGraph *gr[10000];
@@ -72,7 +96,7 @@ void testShowProf_rawevent(char* rootfile, int nevn)
   Int_t nsum_ch2[10000];
   Int_t nsum_ch3[10000];
 
-  TGraph *gr[10000];
+  // TGraph *gr[10000];  // Defined twice
   Int_t nraw[10000];
   Int_t raw_x[10000];
   Int_t raw_y[10000];
@@ -88,17 +112,19 @@ void testShowProf_rawevent(char* rootfile, int nevn)
   hprof2d_vpeaksum_us_batch1 = new TProfile2D("hprof2d_vpeaksum_us_batch1","vprofile 2D peaksum us batch 1 ",3000,0,3000,5000,0,5000,-30000,0);
   hprof2d_vpeaksum_us_batch2 = new TProfile2D("hprof2d_vpeaksum_us_batch2","vprofile 2D peaksum us batch 2 ",3000,66000,69000,5000,0,5000,-30000,0);
 
-  tr->SetBranchAddress("ch3.",&revent);
+  tr->SetBranchAddress("ch3.",&revent);  // Relates revent to our .root file data here
+  // Specifically, it chooses to read out data from channel 3 in the root file
   printf("CH3 CH3 CH3 \n");
   for(int i= 0; i< nevn ;i++)
   //for(int i= 0; i< nevents ;i++)
   //for(int i= 0; i< 10 ;i++)
    { 
+   	// starts to read data from the .root file (now imported as a TTree file called tr)
         tr->GetEntry(i);
 	nraw[i] = revent -> GetVAmpSize();
         npeak_ch3[i] = revent->GetVPeakHighSize();
         nsum_ch3[i] = revent->GetVPeakSumSize();
-	printf("event %d \t", i);
+	printf("event %d \t", i);  // %d inserts the variable "i" into the string at %d
         printf("nraw_ch3 = %d\t",nraw[i]);
         printf("npeak_ch3 = %d\t",npeak_ch3[i]);
         printf("nsum_ch3 = %d\n",nsum_ch3[i]);
