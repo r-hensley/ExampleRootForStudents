@@ -50,8 +50,3 @@ root[0] .L testShowProf_rawevent.cxx
 root[1] testShowProf_rawevent("path/to/rootfile",100)         //100 is the number of events  
 // as of initial commit, the path to the rootfile from the macros folder is "../data/1000evn_v3.root"  
 
-
-
-Also, included is a `working_build.tar.xz` file, which is a fully assembled build that should work with ROOT 6 on Ubuntu 20. Try comparing it to whatever your makefile produces to see if you're doing everything right. 
-
-
