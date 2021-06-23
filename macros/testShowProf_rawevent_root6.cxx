@@ -56,53 +56,53 @@ void testShowProf_rawevent(char const *rootfile, int nevn)
   // RawEvent objects store events in a format close to the raw data that comes out of the detector  
   RawEvent *revent = new RawEvent();
 
-  TGraph *gr[100];
-  Int_t x[100];
-  Int_t y[100];
-  Int_t peakhigh[100];
-  Int_t vpeakhigh[100];
-  Int_t vpeaksum[100];
-  Int_t peaktime[100];
-  Int_t peaksum[100];
-  Int_t peaksumtime1[100];
-  Int_t peaksumtime2[100];
+  //TGraph *gr[100];
+  //Int_t x[100];
+  //Int_t y[100];
+  //Int_t peakhigh[100];
+  //Int_t vpeakhigh[100];
+  //Int_t vpeaksum[100];
+  //Int_t peaktime[100];
+  //Int_t peaksum[100];
+  //Int_t peaksumtime1[100];
+  //Int_t peaksumtime2[100];
 
 
-  Int_t ch_vpeakhigh[100][100];
-  Int_t ch_vpeakhigh_time_us[100][100];
-  Int_t ch_vpeakhigh_time_ns[100][100];
+  Int_t ch_vpeakhigh;
+  Int_t ch_vpeakhigh_time_us;
+  Int_t ch_vpeakhigh_time_ns;
 
-  Long_t ch_vpeaksum0[100][100];
-  Int_t ch_vpeaksum0_peak[100][100];
-  Long_t ch_vpeaksum_tail[100][100];
-  Long_t ch_vpeaksum_peak[100][100];
+  Long_t ch_vpeaksum0;
+  Int_t ch_vpeaksum0_peak;
+  Long_t ch_vpeaksum_tail;
+  Long_t ch_vpeaksum_peak;
 
 
-  Int_t ch_vpeaksum[100][100];
-  Int_t ch_vpeaksum_time0_us[100][100];
-  UInt_t ch_vpeaksum_time0_ns[100][100];
+  Int_t ch_vpeaksum;
+  Int_t ch_vpeaksum_time0_us;
+  UInt_t ch_vpeaksum_time0_ns;
 
-  Double_t ch_vpeaksum_time1_ms[100][100];
-  Double_t ch_vpeaksum_time1_us[100][100];
-  UInt_t ch_vpeaksum_time1_ns[100][100];
+  Double_t ch_vpeaksum_time1_ms;
+  Double_t ch_vpeaksum_time1_us;
+  UInt_t ch_vpeaksum_time1_ns;
 
-  Double_t ch_vpeaksum_time2_us[100][100];
-  UInt_t ch_vpeaksum_time2_ns[100][100];
+  Double_t ch_vpeaksum_time2_us;
+  UInt_t ch_vpeaksum_time2_ns;
 
-  Int_t npeak_ch0[100];
-  Int_t npeak_ch1[100];
-  Int_t npeak_ch2[100];
-  Int_t npeak_ch3[100];
+  //Int_t npeak_ch0;
+  //Int_t npeak_ch1;
+  //Int_t npeak_ch2;
+  Int_t npeak_ch3;
 
-  Int_t nsum_ch0[100];
-  Int_t nsum_ch1[100];
-  Int_t nsum_ch2[100];
-  Int_t nsum_ch3[100];
+  //Int_t nsum_ch0;
+  //Int_t nsum_ch1;
+  //Int_t nsum_ch2;
+  Int_t nsum_ch3;
 
   // TGraph *gr[100];  // Defined twice in the root 5 version for some reason
-  Int_t nraw[100];
-  Int_t raw_x[100];
-  Int_t raw_y[100];
+  Int_t nraw;
+  //Int_t raw_x[100];
+  //Int_t raw_y[100];
 
   int nevents = tr->GetEntries();
 
@@ -124,51 +124,51 @@ void testShowProf_rawevent(char const *rootfile, int nevn)
    { 
    	// starts to read data from the .root file (now imported as a TTree file called tr)
         tr->GetEntry(i);
-	nraw[i] = revent -> GetVAmpSize();
-        npeak_ch3[i] = revent->GetVPeakHighSize();
-        nsum_ch3[i] = revent->GetVPeakSumSize();
-	printf("event %d \t", i);  // %d inserts the variable "i" into the string at %d
-        printf("nraw_ch3 = %d\t",nraw[i]);
-        printf("npeak_ch3 = %d\t",npeak_ch3[i]);
-        printf("nsum_ch3 = %d\n",nsum_ch3[i]);
+	    nraw = revent -> GetVAmpSize();
+        npeak_ch3 = revent->GetVPeakHighSize();
+        nsum_ch3 = revent->GetVPeakSumSize();
+	    printf("event %d \t", i);  // %d inserts the variable "i" into the string at %d
+        printf("nraw_ch3 = %d\t",nraw);
+        printf("npeak_ch3 = %d\t",npeak_ch3);
+        printf("nsum_ch3 = %d\n",nsum_ch3);
 
 
-        for(int j =0; j< npeak_ch3[i] ;j++)
+        for(int j =0; j< npeak_ch3 ;j++)
         {	   
-           ch_vpeakhigh[i][j]=revent->GetVPeakHigh()[j];
-           ch_vpeakhigh_time_us[i][j]=revent->GetVPeakHighTime()[j]*0.001; //convert to us
-           ch_vpeakhigh_time_ns[i][j]=revent->GetVPeakHighTime()[j]; //ns
-           hprof2d_vpeakheight_ms -> Fill(ch_vpeakhigh_time_us[i][j]*0.001,i,ch_vpeakhigh[i][j],1);       
+           ch_vpeakhigh=revent->GetVPeakHigh()[j];
+           ch_vpeakhigh_time_us=revent->GetVPeakHighTime()[j]*0.001; //convert to us
+           ch_vpeakhigh_time_ns=revent->GetVPeakHighTime()[j]; //ns
+           hprof2d_vpeakheight_ms -> Fill(ch_vpeakhigh_time_us*0.001,i,ch_vpeakhigh,1);       
        }               
 
-       for(int j =0; j< nsum_ch3[i] ;j++)
+       for(int j =0; j< nsum_ch3 ;j++)
        {
-          ch_vpeaksum0[i][j]=revent->GetVPeakSum0()[j];
-          ch_vpeaksum[i][j]=revent->GetVPeakSum()[j];
-          ch_vpeaksum0_peak[i][j]=revent->GetVPeakSum0_peak()[j];
+          ch_vpeaksum0=revent->GetVPeakSum0()[j];
+          ch_vpeaksum=revent->GetVPeakSum()[j];
+          ch_vpeaksum0_peak=revent->GetVPeakSum0_peak()[j];
 
-          ch_vpeaksum_time0_us[i][j]=revent->GetVPeakSumTime0()[j]*0.001; //convert to us
-          ch_vpeaksum_time0_ns[i][j]=revent->GetVPeakSumTime0()[j]; //ns
+          ch_vpeaksum_time0_us=revent->GetVPeakSumTime0()[j]*0.001; //convert to us
+          ch_vpeaksum_time0_ns=revent->GetVPeakSumTime0()[j]; //ns
 
-          ch_vpeaksum_time1_ms[i][j]=revent->GetVPeakSumTime1()[j]*0.000001; //convert to ms
-          ch_vpeaksum_time1_us[i][j]=revent->GetVPeakSumTime1()[j]*0.001; //convert to us
-          ch_vpeaksum_time1_ns[i][j]=revent->GetVPeakSumTime1()[j]; //ns
+          ch_vpeaksum_time1_ms=revent->GetVPeakSumTime1()[j]*0.000001; //convert to ms
+          ch_vpeaksum_time1_us=revent->GetVPeakSumTime1()[j]*0.001; //convert to us
+          ch_vpeaksum_time1_ns=revent->GetVPeakSumTime1()[j]; //ns
           //printf("time sum1 = %d \t", ch_vpeaksum_time1_ns[i][j]);
           //printf("time sum0 = %d \t", ch_vpeaksum_time0_ns[i][j]);
 
-          ch_vpeaksum_time2_us[i][j]=revent->GetVPeakSumTime2()[j]*0.001; //convert to us
-          ch_vpeaksum_time2_ns[i][j]=revent->GetVPeakSumTime2()[j]; //ns
+          ch_vpeaksum_time2_us=revent->GetVPeakSumTime2()[j]*0.001; //convert to us
+          ch_vpeaksum_time2_ns=revent->GetVPeakSumTime2()[j]; //ns
           //printf("time sum2 = %d \n", ch_vpeaksum_time2_ns[i][j]);
 
 
-          hprof2d_vpeaksum_ms -> Fill(ch_vpeaksum_time1_ms[i][j],i,ch_vpeaksum[i][j],1);
+          hprof2d_vpeaksum_ms -> Fill(ch_vpeaksum_time1_ms,i,ch_vpeaksum,1);
 
-             if(ch_vpeaksum_time1_us[i][j] < 3000)
+             if(ch_vpeaksum_time1_us < 3000)
                {
-                hprof2d_vpeaksum_us_batch1 -> Fill(ch_vpeaksum_time1_us[i][j],i,ch_vpeaksum[i][j],1);
-               } else if(ch_vpeaksum_time1_us[i][j] > 66000 && ch_vpeaksum_time1_us[i][j] < 69000)
+                hprof2d_vpeaksum_us_batch1 -> Fill(ch_vpeaksum_time1_us,i,ch_vpeaksum,1);
+               } else if(ch_vpeaksum_time1_us > 66000 && ch_vpeaksum_time1_us < 69000)
                {
-                hprof2d_vpeaksum_us_batch2 -> Fill(ch_vpeaksum_time1_us[i][j],i,ch_vpeaksum[i][j],1);
+                hprof2d_vpeaksum_us_batch2 -> Fill(ch_vpeaksum_time1_us,i,ch_vpeaksum,1);
                } 
        }
       
