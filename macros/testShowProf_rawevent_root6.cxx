@@ -44,6 +44,7 @@ void testShowProf_rawevent(char const *rootfile, int nevn)
 
 
   gSystem->Load("$PROJECT/libData.so");  // from TSystem.h, loads things like RawEvent
+  gSystem->Load("$PROJECT/dataClasses/DataCint_rdict.pcm");  // for root6 
 
   TFile *fr = new TFile(rootfile);  // loads the data in the .root file
 
