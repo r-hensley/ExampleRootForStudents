@@ -22,8 +22,12 @@
 # These are useful because if we want to change our compiler from g++ to something else, 
 #  we only need to change one line
 RM := rm -rf
-
+OS:=$(shell uname)
 CC := g++
+
+ifeq ($(OS),Darwin)
+	CC := clang++
+endif
 
 # global paths
 # These are variables we define that will make things work no matter where ROOT is installed on your computer
@@ -33,6 +37,9 @@ CC := g++
 # ROOTLIBS links to the lib folder, /home/ryry013/root/lib, which has a bunch of .so and .rootmap files
 # ROOTCFLAGS are configurable options for this makefile, like -pthread, -std=c++11, -Wno-deprecated-declarations, etc
 # PWD = print working directory, it's the current directory you're in
+CXXFLAGS=`root-config --cflags` -fPIC
+LDFLAGS=`root-config --ldflags`
+GLIBS=`root-config --glibs` -lRooFit -lRooFitCore -lHtml -lMinuit -lFumili
 ROOTINCS = $(shell root-config --incdir)
 ROOTLIBS = $(shell root-config --libdir)
 ROOTCFLAGS = $(shell root-config --cflags)
@@ -55,9 +62,6 @@ DATA = $(PWD)/dataClasses
 -include $(DATA)/Data.mk
 
 # This "all" is the scope (or "target") of the make command. If only `make` is called, it will default to "all". In this case, it will go down to the `libData.so` section
-# Things on the same line as the colon are dependencies, so the "all" target depends on libData.so
-# Things on lines after the colon are commands, so this target has no commands. (Notice, `clean` has no dependencies but a bunch of commands)
-# If you type just `make`, it will default to this because it's the first target in the makefile.
 all: libData.so \
 
 # ROOT html documentation, it will be done as a program which will be alsa compiled by this makefile, program will be as a last condition after all of the libraries
@@ -83,7 +87,7 @@ libData.so: $(DATAOBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
 	# This compiles into libData.so all the default libraries in root + all the ones in DATALIBS like lHist + RawEvent.o + DataCint.o
-	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" $(DATAOBJS) $(DATALIBS)
+	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" -std=c++11 -stdlib=libc++ $(LDFLAGS) $(CXXFLAGS) $(GLIBS) $(DATAOBJS) $(DATALIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -50,3 +50,18 @@ root[0] .L testShowProf_rawevent.cxx
 root[1] testShowProf_rawevent("path/to/rootfile",100)         //100 is the number of events  
 // as of initial commit, the path to the rootfile from the macros folder is "../data/1000evn_v3.root"  
 
+// with root6 in macOS
+$ cd macros
+$ root -l
+root [0] .L testShowProf_rawevent_root6.cxx 
+
+RooFit v3.60 -- Developed by Wouter Verkerke and David Kirkby 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+Error in <TCling::RegisterModule>: cannot find dictionary module DataCint_rdict.pcm
+
+// it shows error here but it can run the macro file.
+
+root [1] testShowProf_rawevent("../data/1000evn_v3.root",100)
+
