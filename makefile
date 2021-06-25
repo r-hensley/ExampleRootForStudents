@@ -24,20 +24,17 @@
 
 RM := rm -rf
 OS:=$(shell uname)
-CC := g++
+
 
 # This is for Mac users
-
-ifeq ($(OS),Darwin)
-	CC := clang++
-endif
-
 # Clang allows both libc++ or libstdc++, whreas gcc supports only libstdc++, so gcc has no -stdlib command option
 
 ifeq ($(OS),Darwin)
-	STDLIB:=-stdlib=libc++
+	STDLIB := -stdlib=libc++
+	CC := clang++
 else
-	STDLIB:=  # Nothing, as Linux can't use this/doesn't need this argument
+	STDLIB :=  # Nothing, as Linux can't use this/doesn't need this argument
+	CC := g++
 endif
 
 
