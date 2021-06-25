@@ -3,16 +3,15 @@
 // There are files for root 5 or root 6 installed, along with instructions for how to convert from root 5 to root 6.
 
 
-// I don't know if it's necessary but I got the main dependencies listed here: https://root.cern/install/dependencies  
-// (Optional download didn't work for me)  
-// I follow https://root.cern/install/build_from_source/  
+// Get the dependencies listed here: https://root.cern/install/dependencies  
+// (One of the downloads listed in the optinal dependencies didn't work for me)  
+// Next, follow https://root.cern/install/build_from_source/  
 // I started with `git clone --branch v5-34-38 https://github.com/root-project/root.git root_src` for root 5.
-
 // This downloads it to a folder called root_src  
-// First, use the makefile to install necessary files  
+
 // If you get error 2: This does not look like a tar archive, do: `sudo apt install curl`
 
-// For root 6, you're probably able to just download one of the prebuilt distributions found by googling `root cern releases`.
+// For root 6, you can install one of the pre-built binaries, or build it yourself using the instructions in the above links.
 
 // To add ROOT to your environment variables (allows you to open it by just typing `root`), you need to follow these instructions:  
 // https://root.cern.ch/root/htmldoc/guides/users-guide/GettingStarted.html  
