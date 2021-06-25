@@ -21,13 +21,25 @@
 # 
 # These are useful because if we want to change our compiler from g++ to something else, 
 #  we only need to change one line
+
 RM := rm -rf
 OS:=$(shell uname)
-CC := g++
+
+
+# This is for Mac users
+# Clang allows both libc++ or libstdc++, whreas gcc supports only libstdc++, so gcc has no -stdlib command option
 
 ifeq ($(OS),Darwin)
+	STDLIB := -stdlib=libc++
 	CC := clang++
+else
+	STDLIB :=  # Nothing, as Linux can't use this/doesn't need this argument
+	CC := g++
 endif
+
+
+# //////////
+
 
 # global paths
 # These are variables we define that will make things work no matter where ROOT is installed on your computer
@@ -37,6 +49,7 @@ endif
 # ROOTLIBS links to the lib folder, /home/ryry013/root/lib, which has a bunch of .so and .rootmap files
 # ROOTCFLAGS are configurable options for this makefile, like -pthread, -std=c++11, -Wno-deprecated-declarations, etc
 # PWD = print working directory, it's the current directory you're in
+
 CXXFLAGS=`root-config --cflags` -fPIC
 LDFLAGS=`root-config --ldflags`
 GLIBS=`root-config --glibs` -lRooFit -lRooFitCore -lHtml -lMinuit -lFumili
@@ -45,12 +58,12 @@ ROOTLIBS = $(shell root-config --libdir)
 ROOTCFLAGS = $(shell root-config --cflags)
 PWD = $(shell pwd)
 
-# IMPORTANT: if these are not set properly, I think the makefile will finish configuring itself without actually working properly 
-# Try running just `root-config` in shell by itself and see if that's installed. If not, consider trying to install it (`sudo apt-get install root-config`)
-#  or manually putting in the correct directories
-
 # One more variable, the /dataClasses folder
 DATA = $(PWD)/dataClasses
+
+
+# //////////
+
 
 # Data.mk is another makefile over in the DATA folder defined in the above line
 
@@ -59,7 +72,12 @@ DATA = $(PWD)/dataClasses
 
 # It then creates the variables DATA_HEADERS, DATACPP_SRCS, DATAOBJS, and DATACPP_DEPS which have files such as 
 #  RawEvent.h, linkdef.h, RawEvent.cpp, DataCint.cpp, etc
+
 -include $(DATA)/Data.mk
+
+
+# //////////
+
 
 # This "all" is the scope (or "target") of the make command. If only `make` is called, it will default to "all". In this case, it will go down to the `libData.so` section
 all: libData.so \
@@ -76,18 +94,27 @@ clean:
 	-$(RM) htmldoc
 	-@echo ' '
 
+
+# //////////
+
+
 # Those *Cint* files below need special treating:
+# -f [file]: set break file
+# -c link C object
+# -p use preprocessor for header files
+# $(DATA_HEADERS) = RawEvent.h linkdef.h
 $(DATA)/DataCint.cpp:
-	-@echo 'Pre-building DataCint.cpp and DataCint.h files'
+	-@echo 'Pre-building DataCint.cpp and DataCint.h or DataCint_rdict.pcm files'
 	-rootcint -f $(DATA)/DataCint.cpp -c -p $(DATA_HEADERS)
 	-@echo ' '
 
 # *.so files
+# Depends on $(DATAOBJS): DataCint.o and RawEvent.o
 libData.so: $(DATAOBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
 	# This compiles into libData.so all the default libraries in root + all the ones in DATALIBS like lHist + RawEvent.o + DataCint.o
-	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" -std=c++11 -stdlib=libc++ $(LDFLAGS) $(CXXFLAGS) $(GLIBS) $(DATAOBJS) $(DATALIBS)
+	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" -std=c++11 $(STDLIB) $(LDFLAGS) $(CXXFLAGS) $(GLIBS) $(DATAOBJS) $(DATALIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -95,6 +122,11 @@ libData.so: $(DATAOBJS)
 .PHONY: all clean
 
 # Each subdirectory must supply rules for building sources it contributes
+# Makefile will come here before compiling libData.so
+# But, in order to compile these, first the .cpp files need to be compiled
+# There's no RawEvent.cpp so RawEvent.o compiles straight away,
+#  but there is a DataCint.cpp file, so before compiling DataCint.o,
+#  DataCint.cpp needs to be compiled
 %.o: %.cpp
 	@echo 'Building file: $@'
 	@echo 'Invoking: $(CC) Compiler'
