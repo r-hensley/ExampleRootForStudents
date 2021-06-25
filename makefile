@@ -32,6 +32,14 @@ ifeq ($(OS),Darwin)
 	CC := clang++
 endif
 
+# Clang allows both libc++ or libstdc++, whreas gcc supports only libstdc++, so gcc has no -stdlib command option
+
+ifeq ($(OS),Darwin)
+	STDLIB:=-stdlib=libc++
+else
+	STDLIB:=  # Nothing, as Linux can't use this/doesn't need this argument
+endif
+
 
 # //////////
 
@@ -109,7 +117,7 @@ libData.so: $(DATAOBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
 	# This compiles into libData.so all the default libraries in root + all the ones in DATALIBS like lHist + RawEvent.o + DataCint.o
-	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" -std=c++11 -stdlib=libc++ $(LDFLAGS) $(CXXFLAGS) $(GLIBS) $(DATAOBJS) $(DATALIBS)
+	$(CC) -L $(ROOTLIBS) -shared -o"libData.so" -std=c++11 $(STDLIB) $(LDFLAGS) $(CXXFLAGS) $(GLIBS) $(DATAOBJS) $(DATALIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
