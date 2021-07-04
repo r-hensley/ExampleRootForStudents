@@ -42,7 +42,8 @@ void histo() {
 	printf("x_range = %f -> %f\n", x_min, x_max);
 	printf("freq = %f\n", freq);
 	printf("sample rate = %f\n", sample_rate);
-	printf("max bin = %d\n", scaled_hist->GetMaximumBin());
+	double max_bin = scaled_hist->GetMaximumBin(); 
+	printf("max bin = %f\n", max_bin);
 	printf("Predicted freq = %f\n", scaled_hist->GetXaxis()->GetBinLowEdge(max_bin));
 	
 	double bin_hz = freq/max_bin;
