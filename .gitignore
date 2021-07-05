@@ -4,3 +4,4 @@
 *.d
 *DataCint*
 *.swp
+/macros/old/*
