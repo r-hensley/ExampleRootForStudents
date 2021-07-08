@@ -40,50 +40,102 @@ R__LOAD_LIBRARY(../libData.so);  // this only works if you have $PROJECT defined
 
 void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 {
-  using std::count;  // lets you use count without having to type std::count everytime
-  using std::endl;  // lets you use std::endl without having to type std::endl everytime
-  gStyle ->SetCanvasDefH(900);  // Arrow sets the SetCanvasDefH variable of the gStyle pointer
-  gStyle ->SetCanvasDefW(1500);  // Sets default width/height of canvases
+	using std::count;  // lets you use count without having to type std::count everytime
+	using std::endl;  // lets you use std::endl without having to type std::endl everytime
+	gStyle ->SetCanvasDefH(900);  // Arrow sets the SetCanvasDefH variable of the gStyle pointer
+	gStyle ->SetCanvasDefW(1500);  // Sets default width/height of canvases
 
-  gSystem->Load("../libData.so");  // from TSystem.h, loads things like RawEvent
-  gSystem->Load("../dataClasses/DataCint_rdict.pcm");  // for root6 
+	gSystem->Load("../libData.so");  // from TSystem.h, loads things like RawEvent
+	gSystem->Load("../dataClasses/DataCint_rdict.pcm");  // for root6 
 
-  TFile *fr = new TFile(rootfile);  // loads the data in the .root file
+	TFile *fr = new TFile(rootfile);  // loads the data in the .root file
 
-  TTree *tr = (TTree*)fr->Get("rtree");  // creates a tree to store the data from data "fr"
+	TTree *tr = (TTree*)fr->Get("rtree");  // creates a tree to store the data from data "fr"
 
-  RawEvent *revent = new RawEvent();
+	RawEvent *revent = new RawEvent();
 
-  Int_t ch_vpeaksum;
+	Int_t ch_vpeaksum;
 
-  Double_t ch_vpeaksum_time1_us;
+	Double_t event_time;
 
-  Int_t nsum_ch3; 
+	Int_t nsum_ch3; 
 
-  double t_min = 1400.;  // kind of chosen arbitrarily
-  double t_max = 1700.;
-  double nt = 500*(t_max - t_min);
-  
-  TH1F *hist = new TH1F("hist", "Time events histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
-  
-  tr->SetBranchAddress("ch3.",&revent);  // Relates revent to our .root file data here
-  // Specifically, it chooses to read out data from channel 3 in the root file
+	double t_min = 0.;  
+	double t_max = 3500.;
+	double nt = 5*(t_max - t_min);
 
-  for(int i= 0; i< nevn ;i++)
-   {
-   	// starts to read data from the .root file (now imported as a TTree file called tr)
-        tr->GetEntry(i);
-        nsum_ch3 = revent->GetVPeakSumSize();  // number of peaks in this event
+	TH1F *hist = new TH1F("hist", "Time events histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
 
-       for(int j =0; j< nsum_ch3 ;j++)
-       {
+	tr->SetBranchAddress("ch3.",&revent);  // Relates revent to our .root file data here
+	// Specifically, it chooses to read out data from channel 3 in the root file
 
-          ch_vpeaksum_time1_us=revent->GetVPeakSumTime1()[j]*0.001; //convert to us
 
-	  hist->Fill(ch_vpeaksum_time1_us);
 
-       }
-  } 
+	for(int i= 0; i< nevn ;i++) {
+		// starts to read data from the .root file (now imported as a TTree file called tr)
+		tr->GetEntry(i);
+		nsum_ch3 = revent->GetVPeakSumSize();  // number of peaks in this event
+
+		for(int j =0; j< nsum_ch3 ;j++)
+		{
+			event_time = revent->GetVPeakSumTime1()[j]*0.001; //convert to us
+			hist->Fill(event_time);
+		}
+	}
+		
+	/* 	
+	
+	int peak1 = 0;
+	int peak2 = 0;
+	int peak3 = 0;
+	int peak4 = 0;
+	int peak5 = 0;
+
+	Int_t bin_number;
+	Double_t bin_content;  
+	
+	if (0 < event_time && event_time < 3000) {
+				hist->Fill(event_time);
+			}
+					
+   			else if (067000 < event_time && event_time < 070000) {
+   				hist->Fill(event_time - 67000 + 3000);
+   			}
+   			
+   			else if (267000 < event_time && event_time < 270000) {
+   				hist->Fill(event_time - 267000 + 6000);
+   			}
+   			else if (334000 < event_time && event_time < 337000) {
+   				hist->Fill(event_time - 334000 + 9000);
+   			} 
+   			else if (534000 < event_time && event_time < 537000) {
+   				hist->Fill(event_time - 534000 + 12000);
+   			}
+	
+	for (int bin = 0; bin <= nt; bin++) {
+		time = hist->GetBinLowEdge(bin);
+		if (bin_content > 150) {
+					
+		   		}
+			) {
+		
+
+	bin_number = hist->GetBin(event_time);
+	bin_content = hist->GetBinContent(bin_number);
+
+	if (bin_content > 150.) {
+	       printf("Bin number: %d\t", bin_number);
+	       printf("Bin time: %f\t", event_time);
+	       printf("Bin content: %f\n", bin_content);
+	}
+
+	// if (0 < event_time < 3000) {
+	//        Double_t peak1 = hist->GetXaxis()->event_time
+	       hist->Fill(event_time);
+	// }
+	// else if (
+
+	*/
 
   TCanvas *c1 = new TCanvas(
 		  "c1",  // name
@@ -113,8 +165,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
   unscaled_FFT->Draw();
 
   c1->cd(3);
-  final_FFT->GetXaxis()->SetRange(2,100);  // skip first bin which is just average DC power
-  final_FFT->SetTitle("FFT Result (First 100 Bins);Frequency (MHz);Magnitude");
+  final_FFT->GetXaxis()->SetRange(10,1000);  // skip first bin which is just average DC power
+  final_FFT->SetTitle("FFT Result (First 1000 Bins);Frequency (MHz);Magnitude");
 
   final_FFT->Draw();
 
