@@ -40,7 +40,7 @@ R__LOAD_LIBRARY(../libData.so);  // this only works if you have $PROJECT defined
 // second argument is called "nevn" of type int
 // We write `testShowProf_rawevent("../data/1000evn_v3.root",100)`
 
-void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1)
+void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100)
 {
 	using std::count;  // lets you use count without having to type std::count everytime
 	using std::endl;  // lets you use std::endl without having to type std::endl everytime
@@ -62,8 +62,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1)
 
 	Int_t nsum_ch3; 
 
-	double t_min = 0.;  
-	double t_max = 3500.;
+	double t_min = 1000.;  
+	double t_max = 2000.;
 	double nt = 5*(t_max - t_min);
 	
 	vector<double> time_vector;
@@ -88,7 +88,10 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1)
 			}
 		}
 	}
-		
+	
+
+	printf("%zu\n", time_vector.size());
+
 	/* 	
 
 	int peak1 = 0;
@@ -188,19 +191,27 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1)
 	double period = 1/max_bin_low_edge;
 	printf("Predicted period (us): %f\n", period);
 	
-	t_min = 5;  
-	t_max = 9;
+	t_min = 4;  
+	t_max = 8;
 	nt = 200*(t_max - t_min);
 	
 	TH1F *zoom_hist = new TH1F("zoom_hist", "Modulated Period Histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
-	
+	double split = 0.;
 	for (int i = 0; i < time_vector.size(); i++) {
 		double mod_result = fmod(time_vector[i], period);
-		if (mod_result <= 6) {
-			zoom_hist->Fill(mod_result + 6.);
+		printf("time: %f\t", time_vector[i]);
+		printf("mod result: %f\t", mod_result);
+		if (split == 0.) {
+			printf("final result: %f\n", mod_result);
+			zoom_hist->Fill(mod_result);
 		}
-		else if (6 < mod_result) {
-			zoom_hist->Fill(mod_result - (period - 6) );
+		else if (mod_result <= split) {
+			printf("final result: %f\n", mod_result + split);
+			zoom_hist->Fill(mod_result + split);
+		}
+		else if (split < mod_result) {
+			printf("final result: %f\n", mod_result - (period - split)); 
+			zoom_hist->Fill(mod_result - (period - split) );
 		}
 	}
   
@@ -225,7 +236,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1)
 	sample_rate = (t_max - t_min) / nt; 
 	final_modulated_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 	
-	final_modulated_FFT->GetXaxis()->SetRange(10,nt/2);  // skip first bin which is just average DC power
+	final_modulated_FFT->GetXaxis()->SetRange(20,nt/2);  // skip first bin which is just average DC power
 	
 	c2->cd(2);
 	final_modulated_FFT->Draw();
