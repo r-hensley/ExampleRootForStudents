@@ -62,10 +62,20 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	Int_t nsum_ch3; 
 
-	double t_min = 0.;  
-	double t_max = 3000000.;
-	double nt = 0.001*(t_max - t_min);
+	double freq_res = 1/3000.;
+	double nyquist_freq = 5;
+	double sample_rate = 1/(nyquist_freq * 2);
+
+	double t_min = 0;
+	double t_max = 1/freq_res;
+	int nt = t_max / sample_rate;
+
+	//double t_min = 0.;  
+	//double t_max = 3000000.;
+	//double nt = 0.001*(t_max - t_min);
 	vector<Double_t> time_vector;
+
+	printf("Sample rate: %f\tt_max: %f\tnt: %d\n", sample_rate, t_max, nt);
 	
 	TH1F *hist = new TH1F("hist", "Time events histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
 
@@ -81,15 +91,15 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 		for(int j =0; j< nsum_ch3 ;j++)
 		{
 			event_time = revent->GetVPeakSumTime1()[j]; //convert to us
-			if (t_min < event_time && event_time < t_max) {
+			if (t_min < event_time * 0.001 && event_time * 0.001 < 30000) {
 				time_vector.push_back(event_time);
-				hist->Fill(event_time);
+				hist->Fill(event_time * 0.001);
 			}
 		}
 	}
 	
 
-	printf("%zu\n", time_vector.size());
+	printf("time_vector.size(): %zu\n", time_vector.size());
 
 	Double_t *FFT_in = &time_vector[0];
 	Int_t n_size = time_vector.size() + 1;
@@ -121,7 +131,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	TVirtualFFT::SetTransform(0);  // Not sure what this does
 	unscaled_FFT = hist->FFT(unscaled_FFT, "MAG");  // Do FFT
 	TH1 * final_FFT = (TH1*)unscaled_FFT->Clone();  // Clone the FFT to scale it
-	Double_t sample_rate = (t_max - t_min) / nt; 
+	// Double_t sample_rate = (t_max - t_min) / nt; 
 	final_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 
 	c1->cd(2);
