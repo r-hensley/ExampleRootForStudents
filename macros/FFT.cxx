@@ -40,7 +40,7 @@ R__LOAD_LIBRARY(../libData.so);  // this only works if you have $PROJECT defined
 // second argument is called "nevn" of type int
 // We write `testShowProf_rawevent("../data/1000evn_v3.root",10)`
 
-void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100)
+void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 {
 	using std::count;  // lets you use count without having to type std::count everytime
 	using std::endl;  // lets you use std::endl without having to type std::endl everytime
@@ -62,8 +62,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	Int_t nsum_ch3; 
 
-	double freq_res = 1/3000.;
-	double nyquist_freq = 5;
+	double freq_res = 0.00001;
+	double nyquist_freq = 0.15;
 	double sample_rate = 1/(nyquist_freq * 2);
 
 	double t_min = 0;
@@ -92,7 +92,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 		{
 			event_time = revent->GetVPeakSumTime1()[j]; //convert to us
 			if (t_min < event_time * 0.001 && event_time * 0.001 < 30000) {
-				time_vector.push_back(event_time);
+				time_vector.push_back(event_time * 0.001);
 				hist->Fill(event_time * 0.001);
 			}
 		}
@@ -100,7 +100,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	
 
 	printf("time_vector.size(): %zu\n", time_vector.size());
-
+	
+	/*
 	Double_t *FFT_in = &time_vector[0];
 	Int_t n_size = time_vector.size() + 1;
 	Double_t re, im;
@@ -108,6 +109,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	array_fft->SetPoints(FFT_in);
 	array_fft->Transform();
 	array_fft->GetPoints(FFT_in);
+	*/
 
 	TCanvas *c1 = new TCanvas(
 		"c1",  // name
@@ -139,7 +141,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	unscaled_FFT->Draw();
 
 	c1->cd(3);
-	final_FFT->GetXaxis()->SetRange(2,nt/2);  // skip first bin which is just average DC power
+	final_FFT->GetXaxis()->SetRange(50,nt/2);  // skip first bin which is just average DC power
 	final_FFT->SetTitle("FFT Result (First 1000 Bins);Frequency (MHz);Magnitude");
 
 	final_FFT->Draw();
@@ -157,18 +159,22 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	Double_t period = us_period;
 	printf("Predicted period (us): %f\n", us_period);
 	Double_t my_period = 11131;  // counted manually to tet 11.0438931, but it's off
-	
+
+	freq_res = 0.001;
+	nyquist_freq = 1250;
+	sample_rate = 1/(nyquist_freq * 2);
+		
 	t_min = 0;  
-	t_max = period;
-	nt = 1*(t_max - t_min);
-	
+	t_max = 1/freq_res;
+	nt = t_max / sample_rate;
+
 	TH1F *zoom_hist = new TH1F("zoom_hist", "Modulated Period Histogram;Time (ns);Acc. Trig. Events", nt, t_min, t_max);
 	double split = 0.;
 	for (int i = 0; i < time_vector.size(); i++) {
 		Double_t mod_result = fmod(time_vector[i], period);
-		// printf("time: %f\tperiod: %f\tmod result: %f\t", time_vector[i], period, mod_result);
+		printf("time: %f\tperiod: %f\tmod result: %f\t", time_vector[i], period, mod_result);
 		if (split == 0.) {
-			// printf("final result: %f\n", mod_result);
+			printf("final result: %f\n", mod_result);
 			zoom_hist->Fill(mod_result);
 		}
 		else if (mod_result <= split) {
@@ -200,7 +206,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	TVirtualFFT::SetTransform(0);  // Not sure what this does
 	unscaled_modulated_FFT = zoom_hist->FFT(unscaled_modulated_FFT, "MAG");  // Do FFT
 	TH1 * final_modulated_FFT = (TH1*)unscaled_modulated_FFT->Clone();  // Clone the FFT to scale it
-	sample_rate = (t_max - t_min) / nt; 
+	// sample_rate = (t_max - t_min) / nt; 
 	final_modulated_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 	
 	final_modulated_FFT->GetXaxis()->SetRange(0,nt/2);  // skip first bin which is just average DC power
