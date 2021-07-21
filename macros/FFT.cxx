@@ -62,7 +62,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	Int_t nsum_ch3; 
 
-	double freq_res = 0.00001;
+	double freq_res = 0.0001;  // Width of bins in MHz on final FFT 
 	double nyquist_freq = 0.15;
 	double sample_rate = 1/(nyquist_freq * 2);
 
@@ -79,6 +79,10 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	
 	TH1F *hist = new TH1F("hist", "Time events histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
 
+
+	// ////////////// Pull data out of .ROOT file ///////////////
+	
+	
 	tr->SetBranchAddress("ch3.",&revent);  // Relates revent to our .root file data here
 	// Specifically, it chooses to read out data from channel 3 in the root file
 
@@ -90,10 +94,11 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 		for(int j =0; j< nsum_ch3 ;j++)
 		{
-			event_time = revent->GetVPeakSumTime1()[j]; //convert to us
-			if (t_min < event_time * 0.001 && event_time * 0.001 < 30000) {
-				time_vector.push_back(event_time * 0.001);
-				hist->Fill(event_time * 0.001);
+			event_time = revent->GetVPeakSumTime1()[j]; // in ns
+			event_time_us = event_time * 0.001 // convert to us
+			if (t_min < event_time_us && event_time_us < 30000) {
+				time_vector.push_back(event_time_us);  // for later time histogram
+				hist->Fill(event_time_us);
 			}
 		}
 	}
@@ -101,7 +106,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	printf("time_vector.size(): %zu\n", time_vector.size());
 	
-	/*
+	/*  ALTERNATE METHOD OF FFT, gives same period
 	Double_t *FFT_in = &time_vector[0];
 	Int_t n_size = time_vector.size() + 1;
 	Double_t re, im;
@@ -128,12 +133,11 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	hist->Draw();
 
 	TH1 *unscaled_FFT = 0;  // Temporary object
-	// unscaled_FFT = TH1::TransformHisto(array_fft, unscaled_FFT, "RE");
+	// unscaled_FFT = TH1::TransformHisto(array_fft, unscaled_FFT, "RE");  // from alternate method
 
 	TVirtualFFT::SetTransform(0);  // Not sure what this does
 	unscaled_FFT = hist->FFT(unscaled_FFT, "MAG");  // Do FFT
 	TH1 * final_FFT = (TH1*)unscaled_FFT->Clone();  // Clone the FFT to scale it
-	// Double_t sample_rate = (t_max - t_min) / nt; 
 	final_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 
 	c1->cd(2);
@@ -146,11 +150,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	final_FFT->Draw();
 
-	printf("First 1000 bins of FFT result: \n");
-	//  for (int i=0; i < 100; i++) {
-	//	  printf("%d: ", i);
-	//	  printf("%f\n", final_FFT->GetBinContent(i));
-	//  }
+	// ////////// Calculate period, print stats /////////////
+	
 	int max_bin = final_FFT->GetMaximumBin();
 	printf("Max bin: %d\n", max_bin);
 	Double_t max_bin_low_edge = final_FFT->GetXaxis()->GetBinLowEdge(max_bin);
@@ -158,25 +159,30 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	Double_t us_period = 1/max_bin_low_edge;
 	Double_t period = us_period;
 	printf("Predicted period (us): %f\n", us_period);
-	Double_t my_period = 11131;  // counted manually to tet 11.0438931, but it's off
 
-	freq_res = 0.001;
-	nyquist_freq = 1250;
-	sample_rate = 1/(nyquist_freq * 2);
-		
+	// /////////// Construct second canvas of histograms //////////////
+
+	int time_per_bin_ns = 3; // ns per bin
+	Double_t time_per_bin_us = time_per_bin_ns / 1000.; 
+	
 	t_min = 0;  
-	t_max = 1/freq_res;
-	nt = t_max / sample_rate;
-
-	TH1F *zoom_hist = new TH1F("zoom_hist", "Modulated Period Histogram;Time (ns);Acc. Trig. Events", nt, t_min, t_max);
-	double split = 0.;
-	for (int i = 0; i < time_vector.size(); i++) {
-		Double_t mod_result = fmod(time_vector[i], period);
-		printf("time: %f\tperiod: %f\tmod result: %f\t", time_vector[i], period, mod_result);
+	t_max = period;
+	nt = t_max / time_per_bin_us;
+	
+	TH1F *zoom_hist = new TH1F(
+	"zoom_hist", 
+	"#splitline{Period-Modulated Histogram}{          First 200us};Time (us);Acc. Trig. Events", 
+	nt, t_min, t_max);
+	
+	double split = 0.;  // split is only if the modulo splits the histogram in half
+	for (int i = 0; i < time_vector.size(); i++) { 
+		Double_t mod_result = fmod(time_vector[i], period);  // modulo
 		if (split == 0.) {
-			printf("final result: %f\n", mod_result);
+			//printf("final result: %f\n", mod_result);
 			zoom_hist->Fill(mod_result);
 		}
+		
+		// if split = 0, ignore below
 		else if (mod_result <= split) {
 			printf("final result: %f\n", (mod_result + split));
 			zoom_hist->Fill( (mod_result + split));
@@ -196,26 +202,41 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 		1000  // height
 		);
 		
-	c2->Divide(2, 1); 
+	c2->Divide(3, 1); 
 	
 	c2->cd(1);
 	zoom_hist->Draw();
 	
+	c2->cd(2);
+	TH1F * zoom_hist2 = (TH1F*)zoom_hist->Clone();
+	zoom_hist2 -> GetXaxis() -> SetRangeUser(1.95, 4.00);
+	std::string period_text = "Period: " + std::to_string(period) + " us";	
+	zoom_hist2 -> SetTitle(period_text.c_str());
+	zoom_hist2 -> Draw();
 	
+	c2->cd(3);
+	TH1F * zoom_hist3 = (TH1F*)zoom_hist->Clone();
+	zoom_hist3 -> GetXaxis() -> SetRangeUser(2.1, 2.25);
+	std::string time_per_bin_text = "Time per bin: " + std::to_string(time_per_bin_ns) + " ns";
+	zoom_hist3 -> SetTitle(time_per_bin_text.c_str());
+	zoom_hist3 -> Draw();
+	
+	
+	// /////////////// FFT of second histogram ///////////////////
+	
+	/*
 	TH1 *unscaled_modulated_FFT = 0;  // Temporary object
 	TVirtualFFT::SetTransform(0);  // Not sure what this does
 	unscaled_modulated_FFT = zoom_hist->FFT(unscaled_modulated_FFT, "MAG");  // Do FFT
 	TH1 * final_modulated_FFT = (TH1*)unscaled_modulated_FFT->Clone();  // Clone the FFT to scale it
-	// sample_rate = (t_max - t_min) / nt; 
+	sample_rate = (t_max - t_min) / nt; 
 	final_modulated_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 	
 	final_modulated_FFT->GetXaxis()->SetRange(0,nt/2);  // skip first bin which is just average DC power
 
 	c2->cd(2);
 	final_modulated_FFT->Draw();
-	
-
-	printf("Predicted period (us): %f\n", us_period);
+	*/
 	
 	return 0;
 
