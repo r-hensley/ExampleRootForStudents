@@ -1,0 +1,385 @@
+******************************************************************************
+*Tree    :rtree     : tree for FMC228 analysis                               *
+*Entries :      979 : Total =     55241962823 bytes  File  Size =  330552650 *
+*        :          : Tree compression factor = 167.20                       *
+******************************************************************************
+*Branch  :ch0.                                                               *
+*Entries :      979 : BranchElement (see below)                              *
+*............................................................................*
+*Br    0 :ch0.fAmp  : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161329 bytes  File Size  =    5511539 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.37     *
+*............................................................................*
+*Br    1 :ch0.fTime : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161652 bytes  File Size  =    5511858 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.36     *
+*............................................................................*
+*Br    2 :ch0.fPeakHigh : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    7409045 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 169.14     *
+*............................................................................*
+*Br    3 :ch0.fPeakHighTime : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    8227690 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 152.31     *
+*............................................................................*
+*Br    4 :ch0.fPeakSum0 : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    6841632 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 183.17     *
+*............................................................................*
+*Br    5 :ch0.fPeakSum : TArrayD                                             *
+*Entries :      979 : Total  Size= 1253162621 bytes  File Size  =    7035539 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 178.12     *
+*............................................................................*
+*Br    6 :ch0.fPeakSum_tail : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    5514410 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.25     *
+*............................................................................*
+*Br    7 :ch0.fPeakSum0_peak : TArrayD                                       *
+*Entries :      979 : Total  Size= 1253164559 bytes  File Size  =    6588175 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 190.21     *
+*............................................................................*
+*Br    8 :ch0.fPeakSumTime0 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7067344 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 177.32     *
+*............................................................................*
+*Br    9 :ch0.fPeakSumTime1 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7039060 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 178.03     *
+*............................................................................*
+*Br   10 :ch0.fPeakSumTime2 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7090932 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 176.73     *
+*............................................................................*
+*Br   11 :ch0.fvAmp : vector<Double_t>                                       *
+*Entries :      979 : Total  Size=      15186 bytes  File Size  =       3344 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.38     *
+*............................................................................*
+*Br   12 :ch0.fvTime : vector<Double_t>                                      *
+*Entries :      979 : Total  Size=      15201 bytes  File Size  =       3377 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.34     *
+*............................................................................*
+*Br   13 :ch0.fvPeakHigh : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    5643103 bytes  File Size  =    1677177 *
+*Baskets :      142 : Basket Size=      45561 bytes  Compression=   3.36     *
+*............................................................................*
+*Br   14 :ch0.fvPeakHighTime : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    5643687 bytes  File Size  =    2486254 *
+*Baskets :      142 : Basket Size=      45561 bytes  Compression=   2.27     *
+*............................................................................*
+*Br   15 :ch0.fvPeakSum0 : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    2995085 bytes  File Size  =    1173178 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   2.55     *
+*............................................................................*
+*Br   16 :ch0.fvPeakSum : vector<Double_t>                                   *
+*Entries :      979 : Total  Size=    2995006 bytes  File Size  =    1339371 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   2.23     *
+*............................................................................*
+*Br   17 :ch0.fvPeakSum_tail : vector<Double_t>                              *
+*Entries :      979 : Total  Size=      15321 bytes  File Size  =       3465 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.25     *
+*............................................................................*
+*Br   18 :ch0.fvPeakSum0_peak : vector<Double_t>                             *
+*Entries :      979 : Total  Size=    2995480 bytes  File Size  =     942133 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   3.18     *
+*............................................................................*
+*Br   19 :ch0.fvPeakSumTime0 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2995401 bytes  File Size  =    1379707 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   2.17     *
+*............................................................................*
+*Br   20 :ch0.fvPeakSumTime1 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2995401 bytes  File Size  =    1353345 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   2.21     *
+*............................................................................*
+*Br   21 :ch0.fvPeakSumTime2 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2995401 bytes  File Size  =    1403194 *
+*Baskets :       75 : Basket Size=      45561 bytes  Compression=   2.13     *
+*............................................................................*
+*Br   22 :ch0.fGraphSignal : TGraph*                                         *
+*Entries :      979 : Total  Size=     138645 bytes  File Size  =       6754 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=  20.44     *
+*............................................................................*
+*Branch  :ch1.                                                               *
+*Entries :      979 : BranchElement (see below)                              *
+*............................................................................*
+*Br   23 :ch1.fAmp  : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161329 bytes  File Size  =    5511539 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.37     *
+*............................................................................*
+*Br   24 :ch1.fTime : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161652 bytes  File Size  =    5511858 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.36     *
+*............................................................................*
+*Br   25 :ch1.fPeakHigh : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    7134710 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 175.64     *
+*............................................................................*
+*Br   26 :ch1.fPeakHighTime : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7765202 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 161.38     *
+*............................................................................*
+*Br   27 :ch1.fPeakSum0 : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    6580297 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 190.44     *
+*............................................................................*
+*Br   28 :ch1.fPeakSum : TArrayD                                             *
+*Entries :      979 : Total  Size= 1253162621 bytes  File Size  =    6747260 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 185.73     *
+*............................................................................*
+*Br   29 :ch1.fPeakSum_tail : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    5514410 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.25     *
+*............................................................................*
+*Br   30 :ch1.fPeakSum0_peak : TArrayD                                       *
+*Entries :      979 : Total  Size= 1253164559 bytes  File Size  =    6402811 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 195.72     *
+*............................................................................*
+*Br   31 :ch1.fPeakSumTime0 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6791010 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 184.53     *
+*............................................................................*
+*Br   32 :ch1.fPeakSumTime1 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6767360 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 185.18     *
+*............................................................................*
+*Br   33 :ch1.fPeakSumTime2 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6807689 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 184.08     *
+*............................................................................*
+*Br   34 :ch1.fvAmp : vector<Double_t>                                       *
+*Entries :      979 : Total  Size=      15186 bytes  File Size  =       3344 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.38     *
+*............................................................................*
+*Br   35 :ch1.fvTime : vector<Double_t>                                      *
+*Entries :      979 : Total  Size=      15201 bytes  File Size  =       3377 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.34     *
+*............................................................................*
+*Br   36 :ch1.fvPeakHigh : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    4611009 bytes  File Size  =    1429357 *
+*Baskets :      117 : Basket Size=      45561 bytes  Compression=   3.22     *
+*............................................................................*
+*Br   37 :ch1.fvPeakHighTime : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    4611493 bytes  File Size  =    2066737 *
+*Baskets :      117 : Basket Size=      45561 bytes  Compression=   2.23     *
+*............................................................................*
+*Br   38 :ch1.fvPeakSum0 : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    2430991 bytes  File Size  =     939424 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   2.59     *
+*............................................................................*
+*Br   39 :ch1.fvPeakSum : vector<Double_t>                                   *
+*Entries :      979 : Total  Size=    2430925 bytes  File Size  =    1082368 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   2.24     *
+*............................................................................*
+*Br   40 :ch1.fvPeakSum_tail : vector<Double_t>                              *
+*Entries :      979 : Total  Size=      15321 bytes  File Size  =       3465 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.25     *
+*............................................................................*
+*Br   41 :ch1.fvPeakSum0_peak : vector<Double_t>                             *
+*Entries :      979 : Total  Size=    2431321 bytes  File Size  =     775796 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   3.13     *
+*............................................................................*
+*Br   42 :ch1.fvPeakSumTime0 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2431255 bytes  File Size  =    1130224 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   2.15     *
+*............................................................................*
+*Br   43 :ch1.fvPeakSumTime1 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2431255 bytes  File Size  =    1108241 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   2.19     *
+*............................................................................*
+*Br   44 :ch1.fvPeakSumTime2 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2431255 bytes  File Size  =    1146885 *
+*Baskets :       62 : Basket Size=      45561 bytes  Compression=   2.12     *
+*............................................................................*
+*Br   45 :ch1.fGraphSignal : TGraph*                                         *
+*Entries :      979 : Total  Size=     138645 bytes  File Size  =       6754 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=  20.44     *
+*............................................................................*
+*Branch  :ch2.                                                               *
+*Entries :      979 : BranchElement (see below)                              *
+*............................................................................*
+*Br   46 :ch2.fAmp  : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161329 bytes  File Size  =    5511539 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.37     *
+*............................................................................*
+*Br   47 :ch2.fTime : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161652 bytes  File Size  =    5511858 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.36     *
+*............................................................................*
+*Br   48 :ch2.fPeakHigh : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    6895873 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 181.73     *
+*............................................................................*
+*Br   49 :ch2.fPeakHighTime : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7411111 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 169.09     *
+*............................................................................*
+*Br   50 :ch2.fPeakSum0 : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    6414039 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 195.38     *
+*............................................................................*
+*Br   51 :ch2.fPeakSum : TArrayD                                             *
+*Entries :      979 : Total  Size= 1253162621 bytes  File Size  =    6552482 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 191.25     *
+*............................................................................*
+*Br   52 :ch2.fPeakSum_tail : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    5514410 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.25     *
+*............................................................................*
+*Br   53 :ch2.fPeakSum0_peak : TArrayD                                       *
+*Entries :      979 : Total  Size= 1253164559 bytes  File Size  =    6267386 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 199.95     *
+*............................................................................*
+*Br   54 :ch2.fPeakSumTime0 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6594213 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 190.04     *
+*............................................................................*
+*Br   55 :ch2.fPeakSumTime1 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6576654 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 190.55     *
+*............................................................................*
+*Br   56 :ch2.fPeakSumTime2 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    6608782 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 189.62     *
+*............................................................................*
+*Br   57 :ch2.fvAmp : vector<Double_t>                                       *
+*Entries :      979 : Total  Size=      15186 bytes  File Size  =       3344 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.38     *
+*............................................................................*
+*Br   58 :ch2.fvTime : vector<Double_t>                                      *
+*Entries :      979 : Total  Size=      15201 bytes  File Size  =       3377 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.34     *
+*............................................................................*
+*Br   59 :ch2.fvPeakHigh : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    3874131 bytes  File Size  =    1215118 *
+*Baskets :       96 : Basket Size=      45561 bytes  Compression=   3.19     *
+*............................................................................*
+*Br   60 :ch2.fvPeakHighTime : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    3874531 bytes  File Size  =    1744863 *
+*Baskets :       96 : Basket Size=      45561 bytes  Compression=   2.22     *
+*............................................................................*
+*Br   61 :ch2.fvPeakSum0 : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    2042333 bytes  File Size  =     791141 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   2.58     *
+*............................................................................*
+*Br   62 :ch2.fvPeakSum : vector<Double_t>                                   *
+*Entries :      979 : Total  Size=    2042278 bytes  File Size  =     907761 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   2.25     *
+*............................................................................*
+*Br   63 :ch2.fvPeakSum_tail : vector<Double_t>                              *
+*Entries :      979 : Total  Size=      15321 bytes  File Size  =       3465 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.25     *
+*............................................................................*
+*Br   64 :ch2.fvPeakSum0_peak : vector<Double_t>                             *
+*Entries :      979 : Total  Size=    2042608 bytes  File Size  =     655376 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   3.11     *
+*............................................................................*
+*Br   65 :ch2.fvPeakSumTime0 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2042553 bytes  File Size  =     950741 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   2.15     *
+*............................................................................*
+*Br   66 :ch2.fvPeakSumTime1 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2042553 bytes  File Size  =     935098 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   2.18     *
+*............................................................................*
+*Br   67 :ch2.fvPeakSumTime2 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2042553 bytes  File Size  =     966297 *
+*Baskets :       51 : Basket Size=      45561 bytes  Compression=   2.11     *
+*............................................................................*
+*Br   68 :ch2.fGraphSignal : TGraph*                                         *
+*Entries :      979 : Total  Size=     138645 bytes  File Size  =       6754 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=  20.44     *
+*............................................................................*
+*Branch  :ch3.                                                               *
+*Entries :      979 : BranchElement (see below)                              *
+*............................................................................*
+*Br   69 :ch3.fAmp  : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161329 bytes  File Size  =    5511539 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.37     *
+*............................................................................*
+*Br   70 :ch3.fTime : TArrayD                                                *
+*Entries :      979 : Total  Size= 1253161652 bytes  File Size  =    5511858 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.36     *
+*............................................................................*
+*Br   71 :ch3.fPeakHigh : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    7457482 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 168.04     *
+*............................................................................*
+*Br   72 :ch3.fPeakHighTime : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    8194060 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 152.93     *
+*............................................................................*
+*Br   73 :ch3.fPeakSum0 : TArrayD                                            *
+*Entries :      979 : Total  Size= 1253162944 bytes  File Size  =    6830514 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 183.46     *
+*............................................................................*
+*Br   74 :ch3.fPeakSum : TArrayD                                             *
+*Entries :      979 : Total  Size= 1253162621 bytes  File Size  =    7020781 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 178.49     *
+*............................................................................*
+*Br   75 :ch3.fPeakSum_tail : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    5514410 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 227.25     *
+*............................................................................*
+*Br   76 :ch3.fPeakSum0_peak : TArrayD                                       *
+*Entries :      979 : Total  Size= 1253164559 bytes  File Size  =    6596327 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 189.98     *
+*............................................................................*
+*Br   77 :ch3.fPeakSumTime0 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7053352 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 177.67     *
+*............................................................................*
+*Br   78 :ch3.fPeakSumTime1 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7026754 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 178.34     *
+*............................................................................*
+*Br   79 :ch3.fPeakSumTime2 : TArrayD                                        *
+*Entries :      979 : Total  Size= 1253164236 bytes  File Size  =    7077231 *
+*Baskets :      319 : Basket Size=    6201344 bytes  Compression= 177.07     *
+*............................................................................*
+*Br   80 :ch3.fvAmp : vector<Double_t>                                       *
+*Entries :      979 : Total  Size=      15186 bytes  File Size  =       3344 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.38     *
+*............................................................................*
+*Br   81 :ch3.fvTime : vector<Double_t>                                      *
+*Entries :      979 : Total  Size=      15201 bytes  File Size  =       3377 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.34     *
+*............................................................................*
+*Br   82 :ch3.fvPeakHigh : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    5554451 bytes  File Size  =    1717939 *
+*Baskets :      140 : Basket Size=      45561 bytes  Compression=   3.23     *
+*............................................................................*
+*Br   83 :ch3.fvPeakHighTime : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    5555027 bytes  File Size  =    2455395 *
+*Baskets :      140 : Basket Size=      45561 bytes  Compression=   2.26     *
+*............................................................................*
+*Br   84 :ch3.fvPeakSum0 : vector<Double_t>                                  *
+*Entries :      979 : Total  Size=    2974447 bytes  File Size  =    1163582 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   2.55     *
+*............................................................................*
+*Br   85 :ch3.fvPeakSum : vector<Double_t>                                   *
+*Entries :      979 : Total  Size=    2974369 bytes  File Size  =    1325218 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   2.24     *
+*............................................................................*
+*Br   86 :ch3.fvPeakSum_tail : vector<Double_t>                              *
+*Entries :      979 : Total  Size=      15321 bytes  File Size  =       3465 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=   4.25     *
+*............................................................................*
+*Br   87 :ch3.fvPeakSum0_peak : vector<Double_t>                             *
+*Entries :      979 : Total  Size=    2974837 bytes  File Size  =     948210 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   3.14     *
+*............................................................................*
+*Br   88 :ch3.fvPeakSumTime0 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2974759 bytes  File Size  =    1366868 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   2.17     *
+*............................................................................*
+*Br   89 :ch3.fvPeakSumTime1 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2974759 bytes  File Size  =    1342207 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   2.21     *
+*............................................................................*
+*Br   90 :ch3.fvPeakSumTime2 : vector<Double_t>                              *
+*Entries :      979 : Total  Size=    2974759 bytes  File Size  =    1390458 *
+*Baskets :       74 : Basket Size=      45561 bytes  Compression=   2.14     *
+*............................................................................*
+*Br   91 :ch3.fGraphSignal : TGraph*                                         *
+*Entries :      979 : Total  Size=     138645 bytes  File Size  =       6754 *
+*Baskets :       11 : Basket Size=      45561 bytes  Compression=  20.44     *
+*............................................................................*
