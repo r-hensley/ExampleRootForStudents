@@ -1,0 +1,405 @@
+GetVPeakSum0_peak(): -753.000000
+GetVPeakHigh(): -753.000000
+GetVPeakSum0(): -133.000000
+GetVPeakSum(): -11819.000000
+GetVPeakSumTime1(): 280532.000000
+GetVPeakHighTime(): 280538.000000
+GetVPeakSumTime0(): 280540.000000
+GetVPeakSumTime2(): 280564.000000
+
+GetVPeakSum0_peak(): -615.000000
+GetVPeakHigh(): -615.000000
+GetVPeakSum0(): -224.000000
+GetVPeakSum(): -7728.000000
+GetVPeakSumTime1(): 560408.000000
+GetVPeakHighTime(): 560413.000000
+GetVPeakSumTime0(): 560416.000000
+GetVPeakSumTime2(): 560432.000000
+
+GetVPeakSum0_peak(): -920.000000
+GetVPeakHigh(): -920.000000
+GetVPeakSum0(): -198.000000
+GetVPeakSum(): -15552.000000
+GetVPeakSumTime1(): 638348.000000
+GetVPeakHighTime(): 638354.000000
+GetVPeakSumTime0(): 638356.000000
+GetVPeakSumTime2(): 638384.000000
+
+GetVPeakSum0_peak(): -1455.000000
+GetVPeakHigh(): -1455.000000
+GetVPeakSum0(): -138.000000
+GetVPeakSum(): -30603.000000
+GetVPeakSumTime1(): 80056.000000
+GetVPeakHighTime(): 80064.000000
+GetVPeakSumTime0(): 80064.000000
+GetVPeakSumTime2(): 80108.000000
+
+GetVPeakSum0_peak(): -1828.000000
+GetVPeakHigh(): -1828.000000
+GetVPeakSum0(): -2322.000000
+GetVPeakSum(): -44546.000000
+GetVPeakSumTime1(): 157996.000000
+GetVPeakHighTime(): 158006.000000
+GetVPeakSumTime0(): 158008.000000
+GetVPeakSumTime2(): 158060.000000
+
+GetVPeakSum0_peak(): -911.000000
+GetVPeakHigh(): -911.000000
+GetVPeakSum0(): -431.000000
+GetVPeakSum(): -15860.000000
+GetVPeakSumTime1(): 180268.000000
+GetVPeakHighTime(): 180273.000000
+GetVPeakSumTime0(): 180276.000000
+GetVPeakSumTime2(): 180304.000000
+
+GetVPeakSum0_peak(): -1581.000000
+GetVPeakHigh(): -1581.000000
+GetVPeakSum0(): -958.000000
+GetVPeakSum(): -36004.000000
+GetVPeakSumTime1(): 68908.000000
+GetVPeakHighTime(): 68914.000000
+GetVPeakSumTime0(): 68916.000000
+GetVPeakSumTime2(): 68964.000000
+
+GetVPeakSum0_peak(): -912.000000
+GetVPeakHigh(): -912.000000
+GetVPeakSum0(): -207.000000
+GetVPeakSum(): -15694.000000
+GetVPeakSumTime1(): 91176.000000
+GetVPeakHighTime(): 91182.000000
+GetVPeakSumTime0(): 91184.000000
+GetVPeakSumTime2(): 91212.000000
+
+GetVPeakSum0_peak(): -1932.000000
+GetVPeakHigh(): -1932.000000
+GetVPeakSum0(): -640.000000
+GetVPeakSum(): -48048.000000
+GetVPeakSumTime1(): 146848.000000
+GetVPeakHighTime(): 146856.000000
+GetVPeakSumTime0(): 146856.000000
+GetVPeakSumTime2(): 146912.000000
+
+GetVPeakSum0_peak(): -1453.000000
+GetVPeakHigh(): -1453.000000
+GetVPeakSum0(): -1835.000000
+GetVPeakSum(): -30515.000000
+GetVPeakSumTime1(): 80064.000000
+GetVPeakHighTime(): 80069.000000
+GetVPeakSumTime0(): 80072.000000
+GetVPeakSumTime2(): 80112.000000
+
+GetVPeakSum0_peak(): -1951.000000
+GetVPeakHigh(): -1951.000000
+GetVPeakSum0(): -1646.000000
+GetVPeakSum(): -48380.000000
+GetVPeakSumTime1(): 158004.000000
+GetVPeakHighTime(): 158011.000000
+GetVPeakSumTime0(): 158012.000000
+GetVPeakSumTime2(): 158068.000000
+
+GetVPeakSum0_peak(): -1152.000000
+GetVPeakHigh(): -1152.000000
+GetVPeakSum0(): -530.000000
+GetVPeakSum(): -21442.000000
+GetVPeakSumTime1(): 180272.000000
+GetVPeakHighTime(): 180278.000000
+GetVPeakSumTime0(): 180280.000000
+GetVPeakSumTime2(): 180312.000000
+
+GetVPeakSum0_peak(): -1074.000000
+GetVPeakHigh(): -1074.000000
+GetVPeakSum0(): -360.000000
+GetVPeakSum(): -18551.000000
+GetVPeakSumTime1(): 81628.000000
+GetVPeakHighTime(): 81633.000000
+GetVPeakSumTime0(): 81636.000000
+GetVPeakSumTime2(): 81664.000000
+
+GetVPeakSum0_peak(): -1793.000000
+GetVPeakHigh(): -1793.000000
+GetVPeakSum0(): -261.000000
+GetVPeakSum(): -41944.000000
+GetVPeakSumTime1(): 159568.000000
+GetVPeakHighTime(): 159576.000000
+GetVPeakSumTime0(): 159576.000000
+GetVPeakSumTime2(): 159628.000000
+
+GetVPeakSum0_peak(): -2048.000000
+GetVPeakHigh(): -2048.000000
+GetVPeakSum0(): -2900.000000
+GetVPeakSum(): -54078.000000
+GetVPeakSumTime1(): 237508.000000
+GetVPeakHighTime(): 237518.000000
+GetVPeakSumTime0(): 237520.000000
+GetVPeakSumTime2(): 237580.000000
+
+GetVPeakSum0_peak(): -1537.000000
+GetVPeakHigh(): -1537.000000
+GetVPeakSum0(): -2027.000000
+GetVPeakSum(): -36728.000000
+GetVPeakSumTime1(): 80128.000000
+GetVPeakHighTime(): 80133.000000
+GetVPeakSumTime0(): 80136.000000
+GetVPeakSumTime2(): 80184.000000
+
+GetVPeakSum0_peak(): -1061.000000
+GetVPeakHigh(): -1061.000000
+GetVPeakSum0(): -789.000000
+GetVPeakSum(): -21835.000000
+GetVPeakSumTime1(): 102396.000000
+GetVPeakHighTime(): 102401.000000
+GetVPeakSumTime0(): 102404.000000
+GetVPeakSumTime2(): 102440.000000
+
+GetVPeakSum0_peak(): -2000.000000
+GetVPeakHigh(): -2000.000000
+GetVPeakSum0(): -1637.000000
+GetVPeakSum(): -62113.000000
+GetVPeakSumTime1(): 158068.000000
+GetVPeakHighTime(): 158075.000000
+GetVPeakSumTime0(): 158076.000000
+GetVPeakSumTime2(): 158144.000000
+
+GetVPeakSum0_peak(): -532.000000
+GetVPeakHigh(): -532.000000
+GetVPeakSum0(): -185.000000
+GetVPeakSum(): -6734.000000
+GetVPeakSumTime1(): 91172.000000
+GetVPeakHighTime(): 91177.000000
+GetVPeakSumTime0(): 91180.000000
+GetVPeakSumTime2(): 91196.000000
+
+GetVPeakSum0_peak(): -1649.000000
+GetVPeakHigh(): -1649.000000
+GetVPeakSum0(): -741.000000
+GetVPeakSum(): -42742.000000
+GetVPeakSumTime1(): 146844.000000
+GetVPeakHighTime(): 146851.000000
+GetVPeakSumTime0(): 146852.000000
+GetVPeakSumTime2(): 146908.000000
+
+GetVPeakSum0_peak(): -1048.000000
+GetVPeakHigh(): -937.000000
+GetVPeakSum0(): -181.000000
+GetVPeakSum(): -21002.000000
+GetVPeakSumTime1(): 169112.000000
+GetVPeakHighTime(): 146865.000000
+GetVPeakSumTime0(): 169120.000000
+GetVPeakSumTime2(): 169156.000000
+
+GetVPeakSum0_peak(): -1962.000000
+GetVPeakHigh(): -1962.000000
+GetVPeakSum0(): -1904.000000
+GetVPeakSum(): -53818.000000
+GetVPeakSumTime1(): 158220.000000
+GetVPeakHighTime(): 158227.000000
+GetVPeakSumTime0(): 158228.000000
+GetVPeakSumTime2(): 158288.000000
+
+GetVPeakSum0_peak(): -1337.000000
+GetVPeakHigh(): -1337.000000
+GetVPeakSum0(): -764.000000
+GetVPeakSum(): -30728.000000
+GetVPeakSumTime1(): 180488.000000
+GetVPeakHighTime(): 180494.000000
+GetVPeakSumTime0(): 180496.000000
+GetVPeakSumTime2(): 180540.000000
+
+GetVPeakSum0_peak(): -1268.000000
+GetVPeakHigh(): -1268.000000
+GetVPeakSum0(): -1050.000000
+GetVPeakSum(): -27682.000000
+GetVPeakSumTime1(): 213892.000000
+GetVPeakHighTime(): 213897.000000
+GetVPeakSumTime0(): 213900.000000
+GetVPeakSumTime2(): 213940.000000
+
+GetVPeakSum0_peak(): -1925.000000
+GetVPeakHigh(): -1925.000000
+GetVPeakSum0(): -1833.000000
+GetVPeakSum(): -48062.000000
+GetVPeakSumTime1(): 80208.000000
+GetVPeakHighTime(): 80214.000000
+GetVPeakSumTime0(): 80216.000000
+GetVPeakSumTime2(): 80272.000000
+
+GetVPeakSum0_peak(): -1172.000000
+GetVPeakHigh(): -1172.000000
+GetVPeakSum0(): -641.000000
+GetVPeakSum(): -23234.000000
+GetVPeakSumTime1(): 102476.000000
+GetVPeakHighTime(): 102481.000000
+GetVPeakSumTime0(): 102484.000000
+GetVPeakSumTime2(): 102520.000000
+
+GetVPeakSum0_peak(): -2048.000000
+GetVPeakHigh(): -2048.000000
+GetVPeakSum0(): -1355.000000
+GetVPeakSum(): -64306.000000
+GetVPeakSumTime1(): 158148.000000
+GetVPeakHighTime(): 158155.000000
+GetVPeakSumTime0(): 158156.000000
+GetVPeakSumTime2(): 158228.000000
+
+GetVPeakSum0_peak(): -1498.000000
+GetVPeakHigh(): -1498.000000
+GetVPeakSum0(): -1577.000000
+GetVPeakSum(): -31489.000000
+GetVPeakSumTime1(): 80148.000000
+GetVPeakHighTime(): 80153.000000
+GetVPeakSumTime0(): 80156.000000
+GetVPeakSumTime2(): 80196.000000
+
+GetVPeakSum0_peak(): -826.000000
+GetVPeakHigh(): -826.000000
+GetVPeakSum0(): -451.000000
+GetVPeakSum(): -14582.000000
+GetVPeakSumTime1(): 102416.000000
+GetVPeakHighTime(): 102421.000000
+GetVPeakSumTime0(): 102424.000000
+GetVPeakSumTime2(): 102452.000000
+
+GetVPeakSum0_peak(): -1986.000000
+GetVPeakHigh(): -1986.000000
+GetVPeakSum0(): -1313.000000
+GetVPeakSum(): -51547.000000
+GetVPeakSumTime1(): 158088.000000
+GetVPeakHighTime(): 158095.000000
+GetVPeakSumTime0(): 158096.000000
+GetVPeakSumTime2(): 158156.000000
+
+GetVPeakSum0_peak(): -1451.000000
+GetVPeakHigh(): -1451.000000
+GetVPeakSum0(): -115.000000
+GetVPeakSum(): -31160.000000
+GetVPeakSumTime1(): 80136.000000
+GetVPeakHighTime(): 80144.000000
+GetVPeakSumTime0(): 80144.000000
+GetVPeakSumTime2(): 80188.000000
+
+GetVPeakSum0_peak(): -242.000000
+GetVPeakHigh(): -242.000000
+GetVPeakSum0(): -21695.000000
+GetVPeakSum(): -22697.000000
+GetVPeakSumTime1(): 102408.000000
+GetVPeakHighTime(): 102446.000000
+GetVPeakSumTime0(): 102448.000000
+GetVPeakSumTime2(): 102452.000000
+
+GetVPeakSum0_peak(): -1860.000000
+GetVPeakHigh(): -1860.000000
+GetVPeakSum0(): -2066.000000
+GetVPeakSum(): -51057.000000
+GetVPeakSumTime1(): 158080.000000
+GetVPeakHighTime(): 158086.000000
+GetVPeakSumTime0(): 158088.000000
+GetVPeakSumTime2(): 158148.000000
+
+GetVPeakSum0_peak(): -1124.000000
+GetVPeakHigh(): -1124.000000
+GetVPeakSum0(): -459.000000
+GetVPeakSum(): -20611.000000
+GetVPeakSumTime1(): 137416.000000
+GetVPeakHighTime(): 137421.000000
+GetVPeakSumTime0(): 137424.000000
+GetVPeakSumTime2(): 137456.000000
+
+GetVPeakSum0_peak(): -1106.000000
+GetVPeakHigh(): -1106.000000
+GetVPeakSum0(): -108.000000
+GetVPeakSum(): -19983.000000
+GetVPeakSumTime1(): 159684.000000
+GetVPeakHighTime(): 159691.000000
+GetVPeakSumTime0(): 159692.000000
+GetVPeakSumTime2(): 159724.000000
+
+GetVPeakSum0_peak(): -1768.000000
+GetVPeakHigh(): -1768.000000
+GetVPeakSum0(): -2074.000000
+GetVPeakSum(): -40596.000000
+GetVPeakSumTime1(): 237628.000000
+GetVPeakHighTime(): 237634.000000
+GetVPeakSumTime0(): 237636.000000
+GetVPeakSumTime2(): 237684.000000
+
+GetVPeakSum0_peak(): -1698.000000
+GetVPeakHigh(): -1698.000000
+GetVPeakSum0(): -2045.000000
+GetVPeakSum(): -38957.000000
+GetVPeakSumTime1(): 146848.000000
+GetVPeakHighTime(): 146853.000000
+GetVPeakSumTime0(): 146856.000000
+GetVPeakSumTime2(): 146904.000000
+
+GetVPeakSum0_peak(): -1595.000000
+GetVPeakHigh(): -1595.000000
+GetVPeakSum0(): -1313.000000
+GetVPeakSum(): -34630.000000
+GetVPeakSumTime1(): 169116.000000
+GetVPeakHighTime(): 169122.000000
+GetVPeakSumTime0(): 169124.000000
+GetVPeakSumTime2(): 169168.000000
+
+GetVPeakSum0_peak(): -2014.000000
+GetVPeakHigh(): -2014.000000
+GetVPeakSum0(): -1539.000000
+GetVPeakSum(): -52103.000000
+GetVPeakSumTime1(): 224788.000000
+GetVPeakHighTime(): 224795.000000
+GetVPeakSumTime0(): 224796.000000
+GetVPeakSumTime2(): 224856.000000
+
+GetVPeakSum0_peak(): -742.000000
+GetVPeakHigh(): -742.000000
+GetVPeakSum0(): -153.000000
+GetVPeakSum(): -11690.000000
+GetVPeakSumTime1(): 224868.000000
+GetVPeakHighTime(): 224873.000000
+GetVPeakSumTime0(): 224876.000000
+GetVPeakSumTime2(): 224900.000000
+
+GetVPeakSum0_peak(): -1048.000000
+GetVPeakHigh(): -1048.000000
+GetVPeakSum0(): -777.000000
+GetVPeakSum(): -18475.000000
+GetVPeakSumTime1(): 259792.000000
+GetVPeakHighTime(): 259797.000000
+GetVPeakSumTime0(): 259800.000000
+GetVPeakSumTime2(): 259828.000000
+
+GetVPeakSum0_peak(): -1175.000000
+GetVPeakHigh(): -1175.000000
+GetVPeakSum0(): -381.000000
+GetVPeakSum(): -21577.000000
+GetVPeakSumTime1(): 337732.000000
+GetVPeakHighTime(): 337738.000000
+GetVPeakSumTime0(): 337740.000000
+GetVPeakSumTime2(): 337772.000000
+
+GetVPeakSum0_peak(): -341.000000
+GetVPeakHigh(): -341.000000
+GetVPeakSum0(): -8118.000000
+GetVPeakSum(): -11997.000000
+GetVPeakSumTime1(): 258312.000000
+GetVPeakHighTime(): 258330.000000
+GetVPeakSumTime0(): 258332.000000
+GetVPeakSumTime2(): 258344.000000
+
+GetVPeakSum0_peak(): -1071.000000
+GetVPeakHigh(): -1071.000000
+GetVPeakSum0(): -771.000000
+GetVPeakSum(): -18803.000000
+GetVPeakSumTime1(): 304360.000000
+GetVPeakHighTime(): 304365.000000
+GetVPeakSumTime0(): 304368.000000
+GetVPeakSumTime2(): 304396.000000
+
+GetVPeakSum0_peak(): -804.000000
+GetVPeakHigh(): -804.000000
+GetVPeakSum0(): -121.000000
+GetVPeakSum(): -13813.000000
+GetVPeakSumTime1(): 313980.000000
+GetVPeakHighTime(): 313986.000000
+GetVPeakSumTime0(): 313988.000000
+GetVPeakSumTime2(): 314016.000000
+
