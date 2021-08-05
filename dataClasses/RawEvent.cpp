@@ -187,7 +187,7 @@ void RawEvent::SetPeakHigh(Double_t a, Int_t i) {
 void RawEvent::SetPeakHighTime(Double_t a, Int_t i) {
 //	cout << fNPoints << endl;
 	if (i >= fNPoints) {
-		Error("RawEvent::SetPeakHighTime", "Array with peak high time  amplitudes is overloaded!");
+		Error("RawEvent::SetPeakHighTime", "Array with peak high time amplitudes is overloaded!");
 		return;
 	}
 	fPeakHighTime[i] = a;
