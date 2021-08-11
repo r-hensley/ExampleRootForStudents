@@ -41,8 +41,8 @@ void f(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 	int nt = (t_max - t_min) / 4;
 	
 	TH1F * hit_length = new TH1F("hit_length", "Full length of hit;Time (ns);Amplitude", nt, t_min, t_max); 
-	TH1F * first_hits = new TH1F("first_hits", "Times of first hits;Time (ms);Amplitude", 200, 0, 1000); 
-	TH1F * peak_location = new TH1F("peak_location", "Time to max peak;Time (us);Amplitude",13 , 0, 52); 
+	TH1F * first_hits = new TH1F("first_hits", "Times of first hits;Time (ms);Amplitude", 8000, 60, 140); 
+	TH1F * peak_location = new TH1F("peak_location", "Time to max peak;Time (us);Amplitude", 13, 0, 52); 
 	TH1F * peak_area = new TH1F("peak_area", "Peak area;Area;Amplitude", 3000, 0, 150000);
 	TH1F * peak_area0 = new TH1F("GetVPeakSum0()", "Peak area;Area;Amplitude", 250, 0, 2000);
 	TH1F * peak_high = new TH1F("GetVPeakHigh()", "Magnitude peak voltage;Voltage;Amplitude", 500, 0, 2100); 
