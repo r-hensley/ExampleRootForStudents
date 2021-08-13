@@ -76,8 +76,13 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 			if (first_event_time == 0) {
 				first_event_time = event_time;
 				
-				if (first_event_time < 68.8 || 69.5 < first_event_time) {
-					break;  // ignore all events with the first hit not being in this range
+				// first peak: 68.8 - 69.5
+				// second peak: 79.9 - 80.6
+				// third peak: 90.8 - 91.6
+				// fourth peak: 102.3 - 102.8
+				if (first_event_time < 25. || 5000. < first_event_time) {
+					// ignore all events with the first hit not being in this range
+					break;
 				}
 				else { original->Fill(event_time); }
 			}
