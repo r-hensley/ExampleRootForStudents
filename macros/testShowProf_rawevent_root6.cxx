@@ -161,14 +161,14 @@ void testShowProf_rawevent(char const *rootfile, int nevn)
           //printf("time sum2 = %d \n", ch_vpeaksum_time2_ns[i][j]);
 
 
-          hprof2d_vpeaksum_ms -> Fill(ch_vpeaksum_time1_ms,i,ch_vpeaksum,1);
+          hprof2d_vpeaksum_ms -> Fill(ch_vpeaksum_time1_ms, i, ch_vpeaksum, 1);
 
              if(ch_vpeaksum_time1_us < 3000)
                {
-                hprof2d_vpeaksum_us_batch1 -> Fill(ch_vpeaksum_time1_us,i,ch_vpeaksum,1);
+                hprof2d_vpeaksum_us_batch1 -> Fill(ch_vpeaksum_time1_us, i, ch_vpeaksum,1);
                } else if(ch_vpeaksum_time1_us > 66000 && ch_vpeaksum_time1_us < 69000)
                {
-                hprof2d_vpeaksum_us_batch2 -> Fill(ch_vpeaksum_time1_us,i,ch_vpeaksum,1);
+                hprof2d_vpeaksum_us_batch2 -> Fill(ch_vpeaksum_time1_us, i, ch_vpeaksum,1);
                } 
        }
       
