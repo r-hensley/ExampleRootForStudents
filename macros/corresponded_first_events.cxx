@@ -35,6 +35,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	Int_t ch_vpeaksum;
 	Double_t event_time;
 	Double_t first_event_time;
+	Double_t last_event_time;
 	Double_t difference;
 	vector<Double_t> time_vector;
 	
@@ -44,8 +45,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	// second peak: 79.9 - 80.6
 	// third peak: 90.8 - 91.6
 	// fourth peak: 102.3 - 102.8
-	Double_t lower_threshhold = 0.;
-	Double_t upper_threshhold = 1000.;
+	Double_t lower_threshhold = 0.;  // currently not used!
+	Double_t upper_threshhold = 1000.;  // currently not used!
 
 	double freq_res = 0.0001;  // Width of bins in MHz on final FFT 
 	double nyquist_freq = 0.12;
@@ -67,9 +68,9 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 					
     hit_difference -> GetXaxis() -> SetRangeUser(0, 5000);
     
-    TH2F *modulated_profile = new TH2F("modulated_profile", "All events, all  hits;Modulated time (us); Event time (ms)", 
+    TH2F *modulated_th2f = new TH2F("modulated_th2f", "Modulated time per event;Modulated time (us); Event number", 
     100, -11.134488/2, 11.134488/2, 
-    50, 0, 550);
+    1000, 0, 1000);
 
 	tr->SetBranchAddress("ch3.", &revent);
 	
@@ -79,6 +80,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 		nsum_ch3 = revent->GetVPeakSumSize();
 		first_event_time = 0.;
+		last_event_time = 0.;
+
 
 		// loop over hits in event
 		for(int j =0; j< nsum_ch3 ;j++) {
@@ -88,7 +91,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 			
 			if (first_event_time == 0) {
 				first_event_time = event_time;
-				
+				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, 0., 0.);
 
 				if (first_event_time < lower_threshhold || upper_threshhold < first_event_time) {
 					// ignore all events with the first hit not being in this range
@@ -101,15 +104,25 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 				original->Fill(event_time);
 				difference = event_time - first_event_time;
 				
-				if (difference > 1000) {first_event_time = event_time; difference = event_time - first_event_time;}
-				
+				if (event_time - last_event_time > 1000) {
+					first_event_time = event_time; 
+					difference = event_time - first_event_time;
+				}
+				last_event_time = event_time; 
+								
 				hit_difference -> Fill(difference);
 				time_vector.push_back(difference);
 				
 				Double_t mod_result = fmod(difference, 11.134488);
-				// if (mod_result > 1) {printf("%f\t%f\t%f\n", first_event_time, difference, mod_result);}
-				if (mod_result <= 11.134488 / 2) { modulated_profile -> Fill( mod_result, (difference + first_event_time) / 1000 ); }
-				else if (11.134488 / 2 < mod_result) { modulated_profile -> Fill( mod_result - 11.134488, (difference + first_event_time) / 1000); }
+				
+				if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
+
+				// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
+				modulated_th2f -> Fill( mod_result, i );
+				
+				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);
+				
+
 				}
 			}
 
@@ -211,8 +224,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	TH1F * zoom_hist3 = (TH1F*)zoom_hist -> Clone();
 	zoom_hist3 -> GetXaxis() -> SetRangeUser(-0.5, 0.5);
 	std::string first_hit_threshhold = "First hit threshhold: " + std::to_string(lower_threshhold).substr(0, std::to_string(lower_threshhold).find(".") + 2) + " - " + std::to_string(upper_threshhold).substr(0, std::to_string(upper_threshhold).find(".") + 2) + " us";
-	zoom_hist3 -> SetTitle(first_hit_threshhold.c_str()); + " ns";
 	zoom_hist3 -> SetTitle(first_hit_threshhold.c_str());
+	zoom_hist3 -> SetTitle("No hit threshhold");
 	zoom_hist3 -> Draw();
     
     zoom_hist3 -> Draw();
@@ -223,7 +236,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
     
     c3 -> cd();
     
-    modulated_profile -> Draw("colz");
+    modulated_th2f -> Draw("colz");
        
     return 0;
 }
