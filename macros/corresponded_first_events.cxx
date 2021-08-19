@@ -16,7 +16,7 @@ R__LOAD_LIBRARY(../libData.so)
 #include <TProfile2D.h> 
 
 //HISTOGRAMS
-void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
+void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100)
 {
 	using std::count;
 	using std::endl;
@@ -68,9 +68,10 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 					
     hit_difference -> GetXaxis() -> SetRangeUser(0, 5000);
     
-    TH2F *modulated_th2f = new TH2F("modulated_th2f", "Modulated time per event;Modulated time (us); Event number", 
-    100, -11.134488/2, 11.134488/2, 
-    1000, 0, 1000);
+    TH2F *modulated_th2f = new TH2F("modulated_th2f", "First 1000us of events;Event time (us);Event number", 
+    500, 0, 1000,
+    // 100, -11.134488/2, 11.134488/2, 
+    100, 0, 100);
 
 	tr->SetBranchAddress("ch3.", &revent);
 	
@@ -118,7 +119,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 				if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
 
 				// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
-				modulated_th2f -> Fill( mod_result, i );
+				modulated_th2f -> Fill( event_time , i );
 				
 				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);
 				
@@ -236,7 +237,8 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
     
     c3 -> cd();
     
-    modulated_th2f -> Draw("colz");
+    gStyle -> SetPalette(0, 0);
+    modulated_th2f -> Draw("col");
        
     return 0;
 }
