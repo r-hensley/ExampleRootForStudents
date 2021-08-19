@@ -68,7 +68,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 					
     hit_difference -> GetXaxis() -> SetRangeUser(0, 5000);
     
-    TH2F *modulated_th2f = new TH2F("modulated_th2f", "First 300us of events;Event time (us);Event number", 
+    TH2F *modulated_th2f = new TH2F("modulated_th2f", "First 1000us of events (differences);Event time relative to first event (us);Event number", 
     500, 0, 1000,
     // 100, -11.134488/2, 11.134488/2, 
     100, 0, 100);
@@ -119,7 +119,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 				if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
 
 				// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
-				modulated_th2f -> Fill( event_time , i );
+				modulated_th2f -> Fill( difference , i );
 				
 				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);
 				
