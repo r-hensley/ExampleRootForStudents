@@ -1,0 +1,9 @@
+Modulating event_time creates noise across the bottom of the graph
+
+Modulating hit_differences creates clean peaks
+
+FFT over all event_time gives 11.136809us
+
+0 - 40,000: 77,708 (0 over events)
+0 - 80,000: 190,830 (995 over events)
+0 - 140,000: 192,527 (2692 over events)

@@ -42,10 +42,6 @@ R__LOAD_LIBRARY(../libData.so);  // this only works if you have $PROJECT defined
 
 void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 {
-	using std::count;  // lets you use count without having to type std::count everytime
-	using std::endl;  // lets you use std::endl without having to type std::endl everytime
-	gStyle ->SetCanvasDefH(900);  // Arrow sets the SetCanvasDefH variable of the gStyle pointer
-	gStyle ->SetCanvasDefW(1500);  // Sets default width/height of canvases
 
 	gSystem->Load("../libData.so");  // from TSystem.h, loads things like RawEvent
 	gSystem->Load("../dataClasses/DataCint_rdict.pcm");  // for root6 
@@ -59,6 +55,12 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	Int_t ch_vpeaksum;
 
 	Double_t event_time;
+	Double_t event_time_us;
+	Double_t first_event_time;
+	Double_t last_event_time;
+	Double_t difference;
+	Double_t mod_result;
+	Int_t above_100ms = 0;
 
 	Int_t nsum_ch3; 
 
@@ -70,14 +72,35 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	double t_max = 1/freq_res;
 	int nt = t_max / sample_rate;
 
-	//double t_min = 0.;  
-	//double t_max = 3000000.;
-	//double nt = 0.001*(t_max - t_min);
 	vector<Double_t> time_vector;
 
 	printf("Sample rate: %f\tt_max: %f\tnt: %d\n", sample_rate, t_max, nt);
 	
 	TH1F *hist = new TH1F("hist", "Time events histogram;Time (us);Acc. Trig. Events", nt, t_min, t_max);
+	
+	TH1F *hit_difference = new TH1F("hit_difference", 
+									"Relative to first hit;Time Difference;Magnitude", 
+									nt, t_min, t_max);
+									
+	TH2F *time_vs_modulated = new TH2F("time_vs_modulated", "Modulated periods per event time;Modulated time (us);Event time (ms)", 
+    50, -11.134488/2, 11.134488/2,
+    // 100, -11.134488/2, 11.134488/2, 
+    200, 0, 550);	
+    
+    TH2F *event_vs_modulated = new TH2F("event_vs_modulated", "Modulated periods per event number;Modulated time (us);Event number", 
+    50, -11.134488/2, 11.134488/2,
+    // 100, -11.134488/2, 11.134488/2, 
+    250, 0, 1000);	
+    
+    TH2F *event_vs_difference = new TH2F("event_vs_difference", "Hit differences per event;Hit differences (us);Event number", 
+    500, 0, 10000,
+    // 100, -11.134488/2, 11.134488/2, 
+    250, 0, 1000);	
+    
+    TH2F *event_vs_time = new TH2F("event_vs_time", "Event times per event;Event time (us);Event number", 
+    100, 0, 550,
+    // 100, -11.134488/2, 11.134488/2, 
+    100, 0, 1000);
 
 
 	// ////////////// Pull data out of .ROOT file ///////////////
@@ -86,25 +109,68 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	tr->SetBranchAddress("ch3.",&revent);  // Relates revent to our .root file data here
 	// Specifically, it chooses to read out data from channel 3 in the root file
 
-
 	for(int i= 0; i< nevn ;i++) {
 		// starts to read data from the .root file (now imported as a TTree file called tr)
 		tr->GetEntry(i);
 		nsum_ch3 = revent->GetVPeakSumSize();  // number of peaks in this event
+		
+		first_event_time = 0.;
+		last_event_time = 0.;
 
 		for(int j =0; j< nsum_ch3 ;j++)
 		{
-			event_time = revent->GetVPeakSumTime1()[j]; // in ns
-			event_time_us = event_time * 0.001 // convert to us
-			if (t_min < event_time_us && event_time_us < 30000) {
-				time_vector.push_back(event_time_us);  // for later time histogram
-				hist->Fill(event_time_us);
+			event_time = revent->GetVPeakSumTime1()[j] * 0.001; // in nu
+			
+			hist -> Fill(event_time);
+			
+			if (first_event_time == 0) {
+				first_event_time = event_time;
+				
 			}
+			
+			// First hit thresshold!
+			// first peak: 68.8 - 69.5
+			// second peak: 79.9 - 80.6
+			// third peak: 90.8 - 91.6
+			// fourth peak: 102.3 - 102.8
+			if (first_event_time < 0 || 1000000 * 1000 < first_event_time) { break; }
+			
+			else {
+				difference = event_time - first_event_time;
+				
+				if (event_time - last_event_time > 1000) {
+					first_event_time = event_time; 
+					difference = event_time - first_event_time;
+				}
+				last_event_time = event_time; 
+				
+				hit_difference -> Fill(difference);
+				time_vector.push_back(difference);
+				
+				mod_result = fmod(difference, 11.134488);
+				
+				if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
+
+				// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
+				time_vs_modulated -> Fill( mod_result , event_time / 1000 );
+				event_vs_modulated -> Fill( mod_result, i );
+				event_vs_difference -> Fill( difference, i );
+				event_vs_time -> Fill( event_time / 1000, i ); 
+				
+				if (event_time / 1000 > 80) { above_100ms++; }
+				
+				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);
+				
+
+			}
+			
+		
 		}
 	}
 	
 
 	printf("time_vector.size(): %zu\n", time_vector.size());
+	printf("Number of events greater than 80ms: %d\n", above_100ms);
 	
 	/*  ALTERNATE METHOD OF FFT, gives same period
 	Double_t *FFT_in = &time_vector[0];
@@ -136,7 +202,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	// unscaled_FFT = TH1::TransformHisto(array_fft, unscaled_FFT, "RE");  // from alternate method
 
 	TVirtualFFT::SetTransform(0);  // Not sure what this does
-	unscaled_FFT = hist->FFT(unscaled_FFT, "MAG");  // Do FFT
+	unscaled_FFT = hit_difference -> FFT(unscaled_FFT, "MAG");  // Do FFT
 	TH1 * final_FFT = (TH1*)unscaled_FFT->Clone();  // Clone the FFT to scale it
 	final_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
 
@@ -152,45 +218,49 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 	// ////////// Calculate period, print stats /////////////
 	
-	int max_bin = final_FFT->GetMaximumBin();
+	int max_bin = final_FFT -> GetMaximumBin();  // get max bin number
+	
+	Double_t max_bin_content = final_FFT -> GetBinContent(max_bin);
+	Double_t before_bin_content = final_FFT -> GetBinContent(max_bin - 1);
+	Double_t after_bin_content = final_FFT -> GetBinContent(max_bin + 1);
+
+	// Interpolation algorithm http://www.add.ece.ufl.edu/4511/references/ImprovingFFTResoltuion.pdf
+	Double_t bin_shift = (log(after_bin_content/before_bin_content))/(2*log((max_bin_content * max_bin_content)/(before_bin_content * after_bin_content)));
+	
+	Double_t new_bin = max_bin + bin_shift;
+	Double_t freq = (new_bin - 1) * freq_res;
+
+	Double_t max_bin_low_edge = final_FFT -> GetXaxis() -> GetBinLowEdge(max_bin);
+
+	Double_t period = 1/freq;
+
 	printf("Max bin: %d\n", max_bin);
-	Double_t max_bin_low_edge = final_FFT->GetXaxis()->GetBinLowEdge(max_bin);
 	printf("Max bin location (freq. in MHz): %f\n", max_bin_low_edge);
-	Double_t us_period = 1/max_bin_low_edge;
-	Double_t period = us_period;
-	printf("Predicted period (us): %f\n", us_period);
+	printf("Predicted frequency (MHz): %f\n", freq);
+	printf("Predicted period (us): %f\n", period);
+	
+	period = 11.134488;
+	
 
 	// /////////// Construct second canvas of histograms //////////////
 
 	int time_per_bin_ns = 3; // ns per bin
 	Double_t time_per_bin_us = time_per_bin_ns / 1000.; 
 	
-	t_min = 0;  
-	t_max = period;
+	t_min = -period/2;  
+	t_max = period/2;
 	nt = t_max / time_per_bin_us;
 	
 	TH1F *zoom_hist = new TH1F(
 	"zoom_hist", 
-	"#splitline{Period-Modulated Histogram}{          First 200us};Time (us);Acc. Trig. Events", 
+	"Period-Modulated Histogram;Time (us);Acc. Trig. Events", 
 	nt, t_min, t_max);
 	
-	double split = 0.;  // split is only if the modulo splits the histogram in half
+	// shift period/2 <--> period to -period/2 <--> 0
 	for (int i = 0; i < time_vector.size(); i++) { 
 		Double_t mod_result = fmod(time_vector[i], period);  // modulo
-		if (split == 0.) {
-			//printf("final result: %f\n", mod_result);
-			zoom_hist->Fill(mod_result);
-		}
-		
-		// if split = 0, ignore below
-		else if (mod_result <= split) {
-			printf("final result: %f\n", (mod_result + split));
-			zoom_hist->Fill( (mod_result + split));
-		}
-		else if (split < mod_result) {
-			printf("final result: %f\n", (mod_result - (period - split))); 
-			zoom_hist->Fill( (mod_result - (period - split)));
-		}
+		if (mod_result <= period / 2) { zoom_hist -> Fill( mod_result ); }
+		else if (period / 2 < mod_result) { zoom_hist -> Fill( mod_result - period ); }
 	}
   
 	TCanvas *c2 = new TCanvas(
@@ -202,11 +272,12 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 		1000  // height
 		);
 		
-	c2->Divide(3, 1); 
+	// c2->Divide(3, 1); 
 	
 	c2->cd(1);
 	zoom_hist->Draw();
 	
+	/*	
 	c2->cd(2);
 	TH1F * zoom_hist2 = (TH1F*)zoom_hist->Clone();
 	zoom_hist2 -> GetXaxis() -> SetRangeUser(1.95, 4.00);
@@ -220,6 +291,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	std::string time_per_bin_text = "Time per bin: " + std::to_string(time_per_bin_ns) + " ns";
 	zoom_hist3 -> SetTitle(time_per_bin_text.c_str());
 	zoom_hist3 -> Draw();
+	*/
 	
 	
 	// /////////////// FFT of second histogram ///////////////////
@@ -237,6 +309,42 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	c2->cd(2);
 	final_modulated_FFT->Draw();
 	*/
+	
+	// ///////////////////////
+	
+	TCanvas *c3 = new TCanvas("c3", "Modulated Profile", 0, 0, 800, 800);
+    
+    c3 -> cd();
+    
+    // gStyle -> SetPalette(0, 0);
+    time_vs_modulated -> Draw("colz");
+    
+	// ////////////////////////
+	
+	TCanvas *c4 = new TCanvas("c4", "Modulated Profile", 800, 0, 800, 800);
+    
+    c4 -> cd();
+    
+    // gStyle -> SetPalette(0, 0);
+    event_vs_modulated -> Draw("colz");
+    
+    // ////////////////
+    
+    TCanvas *c5 = new TCanvas("c5", "Modulated Profile", 0, 800, 800, 800);
+    
+    c5 -> cd();
+    
+    // gStyle -> SetPalette(0, 0);
+    event_vs_difference -> Draw("colz");
+    
+    // ////////////////
+    
+    TCanvas *c6 = new TCanvas("c6", "Modulated Profile", 800, 800, 800, 800);
+    
+    c6 -> cd();
+    
+    // gStyle -> SetPalette(0, 0);
+    event_vs_time -> Draw("colz");
 	
 	return 0;
 
