@@ -13,14 +13,22 @@ R__LOAD_LIBRARY(../libData.so)
 //HISTOGRAMS
 void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100)
 {
-	using std::count;
-	using std::endl;
+	delete gROOT -> FindObject("c1");
+	delete gROOT -> FindObject("c2");
+	delete gROOT -> FindObject("c3");
+	delete gROOT -> FindObject("c4");
+	delete gROOT -> FindObject("c5");
+	delete gROOT -> FindObject("c6");
+	delete gROOT -> FindObject("hist");
+	delete gROOT -> FindObject("hit_difference");
+	delete gROOT -> FindObject("time_vs_modulated");
+	delete gROOT -> FindObject("event_vs_modulated");
+	delete gROOT -> FindObject("event_vs_difference");
+	delete gROOT -> FindObject("event_vs_time");
+	delete gROOT -> FindObject("out_MAG");
 
-	gStyle ->SetCanvasDefH(900);
-	gStyle ->SetCanvasDefW(1500);
-
-	// gSystem->Load("../libData.so");
-	// gSystem->Load("../dataClasses/DataCint_rdict.pcm");
+	gSystem->Load("../libData.so");
+	gSystem->Load("../dataClasses/DataCint_rdict.pcm");
 
 	TFile *fr = new TFile(rootfile);
 	TTree *tr = (TTree*)fr->Get("rtree");
@@ -38,8 +46,6 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	double t_min = -50.;
 	double t_max = 5000.;
 	double nt = (t_max - t_min);
-    
-	int nevents = tr->GetEntries();
 	
 	TH1F *original = new TH1F("original", 
     						  "Time Events Histogram;Time;Magnitude", 
@@ -60,6 +66,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 		tr->SetBranchAddress("ch0.", &revent);
 		tr->GetEntry(i);
 		first_event_time = revent -> GetVPeakSumTime1()[0] * 0.001;
+		printf("nsum: %f\tFirst event: %f\n", first_event_time)
 		
 		tr->SetBranchAddress("ch0.", &revent);
 		tr->GetEntry(i);

@@ -70,9 +70,9 @@ void f(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 			//time0 = revent -> GetVPeakSumTime0()[j];
 			
 			printf("%d\n", nsum);
-			time1 = revent -> GetVPeakSumTime1()[j] * 0.001;
-			time_last = revent -> GetVPeakSumTime1()[nsum-1];
-			printf("Event %d: %f - %f\n", i, time1, time_last);
+			time1 = revent -> GetVPeakSumTime1()[j] * 0.001 * 0.001;
+			// time_last = revent -> GetVPeakSumTime1()[nsum-1];
+			printf("Event %d: %f", i, time1 * 1000);
 			//time2 = revent -> GetVPeakSumTime2()[j];
 			
 			// printf("%f\n", time1);

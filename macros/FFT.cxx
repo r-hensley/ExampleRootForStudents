@@ -40,9 +40,90 @@ R__LOAD_LIBRARY(../libData.so);  // this only works if you have $PROJECT defined
 // second argument is called "nevn" of type int
 // We write `testShowProf_rawevent("../data/1000evn_v3.root",10)`
 
+Double_t calculate_FFT(TH1F* histo_in, int nt, double sample_rate, double freq_res) {
+		delete gROOT -> FindObject("final_FFT");
+		delete gROOT -> FindObject("out_MAG");
+		delete gROOT -> FindObject("out_MAG");
+		delete gROOT -> FindObject("c1");
+		
+		TCanvas *c1 = new TCanvas(
+		"c1",  // name
+		"Fourier Transform",  // title
+		200,  // wtopx, pixel x-location of top-left corner of the canvas
+		10,  // wtopy, pixel y-location of ...
+		1250,  // width
+		1000  // height
+		);
+	 
+		// ////////////// Start making plots ////////////////
+
+		c1->Divide(2,1);
+
+		c1->cd(1);
+		histo_in -> Draw();
+
+		TH1 *unscaled_FFT = 0;  // Temporary object
+		// unscaled_FFT = TH1::TransformHisto(array_fft, unscaled_FFT, "RE");  // from alternate method
+
+		TVirtualFFT::SetTransform(0);  // Not sure what this does
+		unscaled_FFT = histo_in -> FFT(unscaled_FFT, "MAG");  // Do FFT
+		TH1 * final_FFT = (TH1*)unscaled_FFT->Clone();  // Clone the FFT to scale it
+		printf("Sample rate: %f\nMax bin label: %f\n", sample_rate, nt / (sample_rate * nt));
+		final_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
+
+		c1->cd(2);
+		unscaled_FFT->SetTitle("Unscaled full FFT result;Unscaled frequency;Magnitude");
+		unscaled_FFT->Draw();
+
+		c1->cd(3);
+		final_FFT->GetXaxis()->SetRange(50,nt/2);  // skip first bin which is just average DC power
+		final_FFT->SetTitle("FFT Result (First 1000 Bins);Frequency (MHz);Magnitude");
+
+		final_FFT->Draw();
+
+		// ////////// Calculate period, print stats /////////////
+		
+		int max_bin = final_FFT -> GetMaximumBin();  // get max bin number
+		
+		Double_t max_bin_content = final_FFT -> GetBinContent(max_bin);
+		Double_t before_bin_content = final_FFT -> GetBinContent(max_bin - 1);
+		Double_t after_bin_content = final_FFT -> GetBinContent(max_bin + 1);
+
+		// Interpolation algorithm http://www.add.ece.ufl.edu/4511/references/ImprovingFFTResoltuion.pdf
+		Double_t bin_shift = (log(after_bin_content/before_bin_content))/(2*log((max_bin_content * max_bin_content)/(before_bin_content * after_bin_content)));
+		
+		Double_t new_bin = max_bin + bin_shift;
+		Double_t freq = (new_bin - 1) * freq_res;
+
+		Double_t max_bin_low_edge = final_FFT -> GetXaxis() -> GetBinLowEdge(max_bin);
+
+		Double_t period = 1/freq;
+
+		printf("Max bin: %d\n", max_bin);
+		printf("Max bin location (freq. in MHz): %f\n", max_bin_low_edge);
+		printf("Predicted frequency (MHz): %f\n", freq);
+		printf("Predicted period (us): %f\n", period);
+
+		return period;
+		
+	}
+
 void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 1000)
 {
-
+	delete gROOT -> FindObject("c1");
+	delete gROOT -> FindObject("c2");
+	delete gROOT -> FindObject("c3");
+	delete gROOT -> FindObject("c4");
+	delete gROOT -> FindObject("c5");
+	delete gROOT -> FindObject("c6");
+	delete gROOT -> FindObject("hist");
+	delete gROOT -> FindObject("hit_difference");
+	delete gROOT -> FindObject("time_vs_modulated");
+	delete gROOT -> FindObject("event_vs_modulated");
+	delete gROOT -> FindObject("event_vs_difference");
+	delete gROOT -> FindObject("event_vs_time");
+	delete gROOT -> FindObject("out_MAG");
+	
 	gSystem->Load("../libData.so");  // from TSystem.h, loads things like RawEvent
 	gSystem->Load("../dataClasses/DataCint_rdict.pcm");  // for root6 
 
@@ -61,6 +142,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	Double_t difference;
 	Double_t mod_result;
 	Int_t above_100ms = 0;
+	Int_t num_of_events = 0;
 
 	Int_t nsum_ch3; 
 
@@ -93,7 +175,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
     250, 0, 1000);	
     
     TH2F *event_vs_difference = new TH2F("event_vs_difference", "Hit differences per event;Hit differences (us);Event number", 
-    500, 0, 10000,
+    10000, 0, 10000,
     // 100, -11.134488/2, 11.134488/2, 
     250, 0, 1000);	
     
@@ -119,8 +201,19 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 
 		for(int j =0; j< nsum_ch3 ;j++)
 		{
-			event_time = revent->GetVPeakSumTime1()[j] * 0.001; // in nu
+			event_time = revent->GetVPeakSumTime1()[j] * 0.001; // in us
 			
+			
+			// First hit thresshold!
+			// first peak: 68.8 - 69.5
+			// second peak: 79.9 - 80.6
+			// third peak: 90.8 - 91.6
+			// fourth peak: 102.3 - 102.8
+			if ( j == 0 ) {
+				if (event_time < 60 || 105 < event_time) { }
+				}
+				
+			num_of_events++;
 			hist -> Fill(event_time);
 			
 			if (first_event_time == 0) {
@@ -128,49 +221,39 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 				
 			}
 			
-			// First hit thresshold!
-			// first peak: 68.8 - 69.5
-			// second peak: 79.9 - 80.6
-			// third peak: 90.8 - 91.6
-			// fourth peak: 102.3 - 102.8
-			if (first_event_time < 0 || 1000000 * 1000 < first_event_time) { break; }
+			difference = event_time - first_event_time;
 			
-			else {
+			if (event_time - last_event_time > 1000) {
+				first_event_time = event_time; 
 				difference = event_time - first_event_time;
-				
-				if (event_time - last_event_time > 1000) {
-					first_event_time = event_time; 
-					difference = event_time - first_event_time;
-				}
-				last_event_time = event_time; 
-				
-				hit_difference -> Fill(difference);
-				time_vector.push_back(difference);
-				
-				mod_result = fmod(difference, 11.134488);
-				
-				if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
-
-				// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
-				time_vs_modulated -> Fill( mod_result , event_time / 1000 );
-				event_vs_modulated -> Fill( mod_result, i );
-				event_vs_difference -> Fill( difference, i );
-				event_vs_time -> Fill( event_time / 1000, i ); 
-				
-				if (event_time / 1000 > 80) { above_100ms++; }
-				
-				// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);
-				
-
 			}
+			last_event_time = event_time; 
+			
+			hit_difference -> Fill(difference);
+			time_vector.push_back(difference);
+			
+			mod_result = fmod(difference, 11.134488);
+			
+			if (mod_result > 11.134488 / 2) { mod_result = mod_result - 11.134488; }
+
+			// modulated_th2f -> Fill( mod_result, (difference + first_event_time) / 1000 );
+			time_vs_modulated -> Fill( mod_result , event_time / 1000 );
+			event_vs_modulated -> Fill( mod_result, i );
+			event_vs_difference -> Fill( difference, i );
+			event_vs_time -> Fill( event_time / 1000, i ); 
+			
+			if (event_time / 1000 > 80) { above_100ms++; }
+			
+			// printf("%f\t%f\t%f\t%f\n", first_event_time, event_time, difference, mod_result);		
+			
 			
 		
 		}
 	}
-	
 
 	printf("time_vector.size(): %zu\n", time_vector.size());
-	printf("Number of events greater than 80ms: %d\n", above_100ms);
+	printf("Number of hits greater than 80ms: %d\n", above_100ms);
+	printf("Number of events: %d\n", num_of_events);
 	
 	/*  ALTERNATE METHOD OF FFT, gives same period
 	Double_t *FFT_in = &time_vector[0];
@@ -181,65 +264,14 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	array_fft->Transform();
 	array_fft->GetPoints(FFT_in);
 	*/
-
-	TCanvas *c1 = new TCanvas(
-		"c1",  // name
-		"Fourier Transform",  // title
-		200,  // wtopx, pixel x-location of top-left corner of the canvas
-		10,  // wtopy, pixel y-location of ...
-		1800,  // width
-		1000  // height
-	);
- 
-	// ////////////// Start making plots ////////////////
-
-	c1->Divide(3,1);
-
-	c1->cd(1);
-	hist->Draw();
-
-	TH1 *unscaled_FFT = 0;  // Temporary object
-	// unscaled_FFT = TH1::TransformHisto(array_fft, unscaled_FFT, "RE");  // from alternate method
-
-	TVirtualFFT::SetTransform(0);  // Not sure what this does
-	unscaled_FFT = hit_difference -> FFT(unscaled_FFT, "MAG");  // Do FFT
-	TH1 * final_FFT = (TH1*)unscaled_FFT->Clone();  // Clone the FFT to scale it
-	final_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
-
-	c1->cd(2);
-	unscaled_FFT->SetTitle("Unscaled full FFT result;Unscaled frequency;Magnitude");
-	unscaled_FFT->Draw();
-
-	c1->cd(3);
-	final_FFT->GetXaxis()->SetRange(50,nt/2);  // skip first bin which is just average DC power
-	final_FFT->SetTitle("FFT Result (First 1000 Bins);Frequency (MHz);Magnitude");
-
-	final_FFT->Draw();
-
-	// ////////// Calculate period, print stats /////////////
 	
-	int max_bin = final_FFT -> GetMaximumBin();  // get max bin number
+	printf("\n** Original histogram: **\n");
+	Double_t original_period = calculate_FFT(hist, nt, sample_rate, freq_res);	
+	printf("\n** Hit differences histogram: **\n");
+	Double_t hit_difference_period = calculate_FFT(hit_difference, nt, sample_rate, freq_res);
+	printf("\n");
 	
-	Double_t max_bin_content = final_FFT -> GetBinContent(max_bin);
-	Double_t before_bin_content = final_FFT -> GetBinContent(max_bin - 1);
-	Double_t after_bin_content = final_FFT -> GetBinContent(max_bin + 1);
-
-	// Interpolation algorithm http://www.add.ece.ufl.edu/4511/references/ImprovingFFTResoltuion.pdf
-	Double_t bin_shift = (log(after_bin_content/before_bin_content))/(2*log((max_bin_content * max_bin_content)/(before_bin_content * after_bin_content)));
-	
-	Double_t new_bin = max_bin + bin_shift;
-	Double_t freq = (new_bin - 1) * freq_res;
-
-	Double_t max_bin_low_edge = final_FFT -> GetXaxis() -> GetBinLowEdge(max_bin);
-
-	Double_t period = 1/freq;
-
-	printf("Max bin: %d\n", max_bin);
-	printf("Max bin location (freq. in MHz): %f\n", max_bin_low_edge);
-	printf("Predicted frequency (MHz): %f\n", freq);
-	printf("Predicted period (us): %f\n", period);
-	
-	period = 11.134488;
+	Double_t period = 11.134488;
 	
 
 	// /////////// Construct second canvas of histograms //////////////
@@ -293,23 +325,6 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	zoom_hist3 -> Draw();
 	*/
 	
-	
-	// /////////////// FFT of second histogram ///////////////////
-	
-	/*
-	TH1 *unscaled_modulated_FFT = 0;  // Temporary object
-	TVirtualFFT::SetTransform(0);  // Not sure what this does
-	unscaled_modulated_FFT = zoom_hist->FFT(unscaled_modulated_FFT, "MAG");  // Do FFT
-	TH1 * final_modulated_FFT = (TH1*)unscaled_modulated_FFT->Clone();  // Clone the FFT to scale it
-	sample_rate = (t_max - t_min) / nt; 
-	final_modulated_FFT -> SetBins(nt, 0, nt / (sample_rate * nt));  // Scale FFT
-	
-	final_modulated_FFT->GetXaxis()->SetRange(0,nt/2);  // skip first bin which is just average DC power
-
-	c2->cd(2);
-	final_modulated_FFT->Draw();
-	*/
-	
 	// ///////////////////////
 	
 	TCanvas *c3 = new TCanvas("c3", "Modulated Profile", 0, 0, 800, 800);
@@ -345,6 +360,12 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
     
     // gStyle -> SetPalette(0, 0);
     event_vs_time -> Draw("colz");
+    
+    time_vector.clear();
+    
+    delete tr;
+	delete revent;	
+
 	
 	return 0;
 

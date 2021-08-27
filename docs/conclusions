@@ -4,6 +4,63 @@ Modulating hit_differences creates clean peaks
 
 FFT over all event_time gives 11.136809us
 
-0 - 40,000: 77,708 (0 over events)
-0 - 80,000: 190,830 (995 over events)
-0 - 140,000: 192,527 (2692 over events)
+
+Range: 60-70 (75,281 events)
+** Original histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089810
+Predicted period (us): 11.134645
+
+** Hit differences histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089827
+Predicted period (us): 11.132568
+
+Range: 60-105 (179,031 events)
+** Original histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089811
+Predicted period (us): 11.134515
+
+** Hit differences histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089823
+Predicted period (us): 11.133031
+
+No hit threshold (377,672 events):
+** Original histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089798
+Predicted period (us): 11.136091
+
+** Hit differences histogram: **
+Sample rate: 3.333333
+Max bin label: 0.300000
+Max bin: 899
+Max bin location (freq. in MHz): 0.089800
+Predicted frequency (MHz): 0.089824
+Predicted period (us): 11.132865
+
+
+151191 -- 226130  --> 74,939 difference
+10,705us = 10.7ms per bunch of the eight
+--> ~ 93.4 Hz
+
+2.5 MHz --> 0.4 us
+11.13 us --> 0.0898 MHz
+
