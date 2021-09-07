@@ -235,7 +235,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 			last_event_time = event_time; 
 			
 			hit_difference -> Fill(difference);
-			time_vector.push_back(difference);
+			time_vector.push_back(event_time);
 			
 			mod_result = fmod(difference, 11.134488);
 			
@@ -279,8 +279,7 @@ void signal_FFT(char const *rootfile = "../data/1000evn_v3.root", int nevn = 100
 	
 	printf("\n");
 	
-	Double_t period = 11.134488;
-	
+	Double_t period = 9993.428571429;
 
 	// /////////// Construct second canvas of histograms //////////////
 
